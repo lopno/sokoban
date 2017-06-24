@@ -85,6 +85,13 @@ function updateBoard(board, action) {
   }
 }
 
+function isSolved(board, solution) {
+  return solution.reduce((solved, location) =>
+    solved && board.getIn([location.get('row'), location.get('col')]) === 2
+  , true)
+}
+
 module.exports = {
   updateBoard,
+  isSolved,
 };

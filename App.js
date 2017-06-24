@@ -4,19 +4,34 @@ import Immutable from 'immutable';
 
 import BoardView from './components/BoardView';
 
-import { updateBoard } from './utils/gameBoard';
+import { updateBoard, isSolved } from './utils/gameBoard';
 
-const layoutExample = Immutable.fromJS([
-  [0,0,0,0,0,0,0,0],
-  [0,0,0,2,1,0,0,0],
-  [0,0,0,0,0,0,0,0],
+const boardExample = Immutable.fromJS([
+  [3,3,3,3,3,3,0],
+  [3,1,0,0,0,3,3],
+  [3,0,2,2,0,0,3],
+  [3,0,3,0,0,0,3],
+  [3,0,0,0,0,0,3],
+  [3,3,3,3,3,3,3],
+]);
+
+const solutionExample = Immutable.fromJS([
+  {
+    row: 3,
+    col: 3,
+  },
+  {
+    row: 3,
+    col: 5,
+  },
 ]);
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      layout: layoutExample,
+      board: boardExample,
+      solved: false,
     };
 
     this.updateLocation = this.updateLocation.bind(this);
@@ -24,19 +39,21 @@ export default class App extends React.Component {
 
   updateLocation(direction) {
     console.log(direction);
+    const newBoard = updateBoard(this.state.board, direction);
+    const solved = isSolved(newBoard, solutionExample);
+    console.log(solved);
     this.setState({
-      layout: updateBoard(this.state.layout, direction),
-    })
+      board: newBoard,
+      solved,
+    });
   }
 
   render() {
-    console.log(JSON.stringify(this.state));
     return (
       <View style={styles.container}>
         <View style={styles.gameBoard}>
-          <Text>Game board</Text>
-          <Text>Hey Nuref!</Text>
-          <BoardView width={8} height={3} layout={this.state.layout}/>
+          <Text>{this.state.solved ? 'WELL DONE!' : 'Do the thing'}</Text>
+          <BoardView board={this.state.board} solution={solutionExample}/>
         </View>
         <View style={styles.controls}>
           <Text>Controller thing</Text>
@@ -47,7 +64,6 @@ export default class App extends React.Component {
             <Button onPress={() => this.updateLocation('right')} title="Right" color="red"/>
           </View>
           <Button onPress={() => this.updateLocation('down')} title="Down" color="red"/>
-
         </View>
       </View>
 
