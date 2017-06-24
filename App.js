@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+
 import BoardView from './components/BoardView';
+
+import { updateBoard } from './utils/gameBoard';
 
 const layoutExample = [
   [0,0,0,0,0,0,0,0],
@@ -12,8 +15,6 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      x: 0,
-      y: 0,
       layout: layoutExample,
     };
 
@@ -22,13 +23,9 @@ export default class App extends React.Component {
 
   updateLocation(direction) {
     console.log(direction);
-    switch (direction) {
-      case 'up': this.setState({ y: this.state.y + 1}); break;
-      case 'down': this.setState({ y: this.state.y - 1}); break;
-      case 'left': this.setState({ x: this.state.x - 1}); break;
-      case 'right': this.setState({ x: this.state.x + 1}); break;
-      default: break;
-    }
+    this.setState({
+      layout: updateBoard(this.state.layout, direction),
+    })
   }
 
   render() {
@@ -38,8 +35,7 @@ export default class App extends React.Component {
         <View style={styles.gameBoard}>
           <Text>Game board</Text>
           <Text>Hey Nuref!</Text>
-          <BoardView width={8} height={3} layout={layoutExample}/>
-          <Text>{`x: ${this.state.x}, y: ${this.state.y}`}</Text>
+          <BoardView width={8} height={3} layout={this.state.layout}/>
         </View>
         <View style={styles.controls}>
           <Text>Controller thing</Text>
