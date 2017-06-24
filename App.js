@@ -8,7 +8,7 @@ import { updateBoard } from './utils/gameBoard';
 
 const layoutExample = Immutable.fromJS([
   [0,0,0,0,0,0,0,0],
-  [0,0,0,0,1,0,0,0],
+  [0,0,0,2,1,0,0,0],
   [0,0,0,0,0,0,0,0],
 ]);
 

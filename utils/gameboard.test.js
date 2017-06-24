@@ -21,6 +21,22 @@ describe('components/GameBoard.js', () => {
       expect(gameboard.updateBoard(board, action)).toEqual(newBoard);
     });
 
+    it('should move player and box left if space is free', () => {
+      const board = Immutable.fromJS([
+        [0,0,0],
+        [0,2,1],
+        [0,0,0],
+      ]);
+      const action = 'left';
+      const newBoard = Immutable.fromJS([
+        [0,0,0],
+        [2,1,0],
+        [0,0,0],
+      ]);
+
+      expect(gameboard.updateBoard(board, action)).toEqual(newBoard);
+    });
+
     it('should not move player left when space is not free', () => {
       const board = Immutable.fromJS([
         [0,0,0],
@@ -47,6 +63,22 @@ describe('components/GameBoard.js', () => {
       const newBoard = Immutable.fromJS([
         [0,1,0],
         [0,0,0],
+        [0,0,0],
+      ]);
+
+      expect(gameboard.updateBoard(board, action)).toEqual(newBoard);
+    });
+
+    it('should move player and box up when space is free', () => {
+      const board = Immutable.fromJS([
+        [0,0,0],
+        [0,2,0],
+        [0,1,0],
+      ]);
+      const action = 'up';
+      const newBoard = Immutable.fromJS([
+        [0,2,0],
+        [0,1,0],
         [0,0,0],
       ]);
 
@@ -85,6 +117,22 @@ describe('components/GameBoard.js', () => {
       expect(gameboard.updateBoard(board, action)).toEqual(newBoard);
     });
 
+    it('should move player and box right when space is free', () => {
+      const board = Immutable.fromJS([
+        [0,0,0],
+        [1,2,0],
+        [0,0,0],
+      ]);
+      const action = 'right';
+      const newBoard = Immutable.fromJS([
+        [0,0,0],
+        [0,1,2],
+        [0,0,0],
+      ]);
+
+      expect(gameboard.updateBoard(board, action)).toEqual(newBoard);
+    });
+
     it('should not move player right when space is not free', () => {
       const board = Immutable.fromJS([
         [0,0,0],
@@ -112,6 +160,22 @@ describe('components/GameBoard.js', () => {
         [0,0,0],
         [0,0,0],
         [0,1,0],
+      ]);
+
+      expect(gameboard.updateBoard(board, action)).toEqual(newBoard);
+    });
+
+    it('should move player and box down when space is free', () => {
+      const board = Immutable.fromJS([
+        [0,1,0],
+        [0,2,0],
+        [0,0,0],
+      ]);
+      const action = 'down';
+      const newBoard = Immutable.fromJS([
+        [0,0,0],
+        [0,1,0],
+        [0,2,0],
       ]);
 
       expect(gameboard.updateBoard(board, action)).toEqual(newBoard);

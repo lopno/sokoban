@@ -20,6 +20,15 @@ const styles = StyleSheet.create({
   }
 });
 
+function getCellColor(cellValue) {
+  switch (cellValue) {
+    case 0: return '#BEE1D2';
+    case 1: return 'red';
+    case 2: return 'blue';
+    default: return '#BEE1D2';
+  }
+}
+
 export default class BoardView extends React.Component {
   render() {
     const CELL_SIZE = Math.floor(width / this.props.layout.get(0).size);
@@ -52,7 +61,7 @@ export default class BoardView extends React.Component {
               styles.tile,
               position,
               {
-                backgroundColor: this.props.layout.getIn([rowIndex, colIndex]) ? 'red' : '#BEE1D2',
+                backgroundColor: getCellColor(this.props.layout.getIn([rowIndex, colIndex])),
               },
             ]}
           />;
