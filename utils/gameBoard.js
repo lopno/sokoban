@@ -1,12 +1,10 @@
-import immutable from 'immutable';
-
 function updateBoard(board, action) {
-  const imBoard = immutable.fromJS(board);
+  // const board = immutable.fromJS(board);
   let playerRow = 0;
   let playerCol = 0;
 
   // TODO: this could be optimized
-  imBoard.map((row, rowIndex) => {
+  board.map((row, rowIndex) => {
     row.map((cell, colIndex) => {
       if (cell === 1) {
         playerRow = rowIndex;
@@ -16,38 +14,38 @@ function updateBoard(board, action) {
   });
   switch (action) {
     case 'left': {
-      if (playerCol > 0 && imBoard.getIn([playerRow, playerCol - 1]) === 0) {
-        return imBoard.withMutations(b => {
+      if (playerCol > 0 && board.getIn([playerRow, playerCol - 1]) === 0) {
+        return board.withMutations(b => {
           b.setIn([playerRow, playerCol - 1], 1)
             .setIn([playerRow, playerCol], 0)
-        }).toJS()
+        });
       }
       return board;
     }
     case 'right': {
-      if (playerCol < imBoard.get(0).size - 1 && imBoard.getIn([playerRow, playerCol + 1]) === 0) {
-        return imBoard.withMutations(b => {
+      if (playerCol < board.get(0).size - 1 && board.getIn([playerRow, playerCol + 1]) === 0) {
+        return board.withMutations(b => {
           b.setIn([playerRow, playerCol + 1], 1)
             .setIn([playerRow, playerCol], 0)
-        }).toJS()
+        });
       }
       return board;
     }
     case 'up': {
-      if (playerRow > 0 && imBoard.getIn([playerRow - 1, playerCol]) === 0) {
-        return imBoard.withMutations(b => {
+      if (playerRow > 0 && board.getIn([playerRow - 1, playerCol]) === 0) {
+        return board.withMutations(b => {
           b.setIn([playerRow - 1, playerCol], 1)
             .setIn([playerRow, playerCol], 0)
-        }).toJS()
+        });
       }
       return board;
     }
     case 'down': {
-      if (playerRow < imBoard.size - 1 && imBoard.getIn([playerRow + 1, playerCol]) === 0) {
-        return imBoard.withMutations(b => {
+      if (playerRow < board.size - 1 && board.getIn([playerRow + 1, playerCol]) === 0) {
+        return board.withMutations(b => {
           b.setIn([playerRow + 1, playerCol], 1)
             .setIn([playerRow, playerCol], 0)
-        }).toJS()
+        });
       }
       return board;
     }

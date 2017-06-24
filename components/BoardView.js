@@ -22,37 +22,10 @@ const styles = StyleSheet.create({
 
 export default class BoardView extends React.Component {
   render() {
-    const CELL_SIZE = Math.floor(width / this.props.layout[0].length); // 20% of the screen width
+    const CELL_SIZE = Math.floor(width / this.props.layout.get(0).size);
     const CELL_PADDING = Math.floor(CELL_SIZE * .05); // 5% of the cell size
     const BORDER_RADIUS = CELL_PADDING * 2;
     const TILE_SIZE = CELL_SIZE - CELL_PADDING * 2;
-/*
-    let result = [];
-    for (let row = 0; row < this.props.height; row++) {
-      for (let col = 0; col < this.props.width; col++) {
-        const key = `${row}${col}`;
-        const position = {
-          left: col * CELL_SIZE + CELL_PADDING,
-          top: row * CELL_SIZE + CELL_PADDING,
-          width: TILE_SIZE,
-          height: TILE_SIZE,
-          borderRadius: BORDER_RADIUS,
-        };
-        result.push(
-          <View
-            key={key}
-            style={[
-              styles.tile,
-              position,
-              {
-                backgroundColor: this.props.layout[row][col] ? 'red' : '#BEE1D2',
-              },
-            ]}
-          />
-        );
-      }
-    }
-    */
 
     return <View
       style={[
@@ -73,14 +46,13 @@ export default class BoardView extends React.Component {
             height: TILE_SIZE,
             borderRadius: BORDER_RADIUS,
           };
-          // console.log('rowIndex', rowIndex, 'colIndex', colIndex);
           return <View
             key={key}
             style={[
               styles.tile,
               position,
               {
-                backgroundColor: this.props.layout[rowIndex][colIndex] ? 'red' : '#BEE1D2',
+                backgroundColor: this.props.layout.getIn([rowIndex, colIndex]) ? 'red' : '#BEE1D2',
               },
             ]}
           />;
@@ -93,7 +65,7 @@ export default class BoardView extends React.Component {
 BoardView.props = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  layout: PropTypes.array.isRequired,
+  layout: PropTypes.any.isRequired, // TODO: describe immutable structure
 };
 
 module.exports = BoardView;

@@ -1,15 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import Immutable from 'immutable';
 
 import BoardView from './components/BoardView';
 
 import { updateBoard } from './utils/gameBoard';
 
-const layoutExample = [
+const layoutExample = Immutable.fromJS([
   [0,0,0,0,0,0,0,0],
   [0,0,0,0,1,0,0,0],
   [0,0,0,0,0,0,0,0],
-];
+]);
 
 export default class App extends React.Component {
   constructor(props) {
