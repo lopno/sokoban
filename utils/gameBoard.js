@@ -1,10 +1,12 @@
+import Immutable from 'immutable';
 import directions from '../constants/directions';
 import boardElements from '../constants/boardElements';
 
+// TODO: fix this logic -- make tests pass
 function updateBoard(board, playerPos, nextTile, direction, shouldPush) {
   const currentTile = board.getIn([playerPos.get('row'), playerPos.get('col')]);
-  const newPlayerPos = updatePosition(playerPos, direction);
-  const newBoxPos = updatePosition(playerPos, direction, true);
+  const newPlayerPos = updatePlayerPos(playerPos, direction);
+  const newBoxPos = updatePlayerPos(playerPos, direction, true);
 
   return board.withMutations(b =>
     shouldPush
@@ -18,13 +20,15 @@ function updateBoard(board, playerPos, nextTile, direction, shouldPush) {
           : boardElements.player)
       .setIn(
         [newBoxPos.get('row'), newBoxPos.get('col')],
-        shouldPush ? boardElements.box : board.getIn([newBoxPos.get('row'), newBoxPos.get('col')]))
+        board.getIn([newBoxPos.get('row'), newBoxPos.get('col')]) === boardElements.goal
+          ? boardElements.boxOnGoal
+          : boardElements.box)
       : b.setIn(
       [playerPos.get('row'), playerPos.get('col')],
       currentTile === boardElements.playerOnGoal ? boardElements.goal : boardElements.floor)
       .setIn(
         [newPlayerPos.get('row'), newPlayerPos.get('col')],
-        nextTile === boardElements.boxOnGoal || nextTile === boardElements.goal
+        nextTile === boardElements.goal
           ? boardElements.playerOnGoal
           : boardElements.player)
   );
@@ -64,7 +68,7 @@ function isMoveValid(board, playerPos, direction) {
   return false;
 }
 
-function updatePosition(playerPos, direction, isBox = false) {
+function updatePlayerPos(playerPos, direction, isBox = false) {
   const distance = isBox ? 2 : 1;
   switch (direction) {
     case directions.up: return playerPos.set('row', playerPos.get('row') - distance);
@@ -74,9 +78,27 @@ function updatePosition(playerPos, direction, isBox = false) {
   }
 }
 
+function getPlayerPos(board) {
+  let col = -1;
+  let row = board.findIndex((row) => {
+    let indexInRow = row.findIndex(element =>
+    element === boardElements.player || element === boardElements.playerOnGoal);
+    if (indexInRow > -1) {
+      col = indexInRow;
+      return true;
+    }
+    return false;
+  });
+  return Immutable.fromJS({
+    col,
+    row,
+  });
+}
+
 module.exports = {
   updateBoard,
-  updatePosition,
+  updatePlayerPos,
   isSolved,
   isMoveValid,
+  getPlayerPos,
 };

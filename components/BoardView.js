@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 import dimensions from 'Dimensions';
 
+import boardElements from '../constants/boardElements';
 const { width, height } = dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -20,15 +21,15 @@ const styles = StyleSheet.create({
   }
 });
 
-function getCellColor(cellValue, isSolutionTile) {
-  if (cellValue === 0 && isSolutionTile) {
-    return 'yellow';
-  }
+function getCellColor(cellValue) {
   switch (cellValue) {
-    case 0: return '#BEE1D2';
-    case 1: return 'red';
-    case 2: return 'blue';
-    case 3: return 'green';
+    case boardElements.floor: return '#BEE1D2';
+    case boardElements.player: return 'red';
+    case boardElements.playerOnGoal: return 'red';
+    case boardElements.box: return 'blue';
+    case boardElements.goal: return 'green';
+    case boardElements.boxOnGoal: return 'yellow';
+    case boardElements.wall: return 'black';
     default: return '#BEE1D2';
   }
 }
@@ -50,7 +51,7 @@ export default class BoardView extends React.Component {
       ]}
     >
       {this.props.board.map((row, rowIndex) =>
-        row.map((col, colIndex) => {
+        row.map((tile, colIndex) => {
           const key = `${rowIndex}${colIndex}`;
           const position = {
             left: colIndex * CELL_SIZE + CELL_PADDING,
@@ -59,17 +60,20 @@ export default class BoardView extends React.Component {
             height: TILE_SIZE,
             borderRadius: BORDER_RADIUS,
           };
-          const isSolutionTile = this.props.solution.find(location => location.get('row') === rowIndex && location.get('col') === colIndex);
           return <View
             key={key}
             style={[
               styles.tile,
               position,
               {
-                backgroundColor: getCellColor(this.props.board.getIn([rowIndex, colIndex]), isSolutionTile),
+                backgroundColor: getCellColor(this.props.board.getIn([rowIndex, colIndex])),
               },
             ]}
-          />;
+          >
+            <Text>
+              {tile}
+            </Text>
+          </View>;
         })
       )}
     </View>;
@@ -80,7 +84,6 @@ BoardView.props = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   board: PropTypes.any.isRequired, // TODO: describe immutable structure
-  solution: PropTypes.any.isRequired, // TODO: describe immutable structure
 };
 
 module.exports = BoardView;

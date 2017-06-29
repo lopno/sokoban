@@ -182,6 +182,33 @@ describe('updateBoard', () => {
 
     expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
   });
+  
+  it('should move move box and player to the right', () => {
+    const playerPos = Immutable.fromJS({
+      col: 1,
+      row: 2,
+    });
+    const nextTile = '$';
+    const shouldPush = true;
+    const board = Immutable.fromJS([
+      ["#", "#", "#", "#", "#", "#", " "],
+      ["#", " ", " ", " ", " ", "#", "#"],
+      ["#", "@", "$", " ", " ", " ", "#"],
+      ["#", " ", "#", "*", " ", ".", "#"],
+      ["#", " ", " ", " ", " ", " ", "#"],
+      ["#", "#", "#", "#", "#", "#", "#"],
+    ]);
+    const direction = directions.right;
+    const newBoard = Immutable.fromJS([
+      ["#", "#", "#", "#", "#", "#", " "],
+      ["#", " ", " ", " ", " ", "#", "#"],
+      ["#", " ", "@", "$", " ", " ", "#"],
+      ["#", " ", "#", "*", " ", ".", "#"],
+      ["#", " ", " ", " ", " ", " ", "#"],
+      ["#", "#", "#", "#", "#", "#", "#"],
+    ]);
+    expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
+  });
 });
 
 describe('isSolved', () => {

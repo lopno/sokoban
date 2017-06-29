@@ -1,32 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import Immutable from 'immutable';
+import { connect } from 'react-redux';
 import BoardView from './BoardView';
-import { updateBoard, isSolved } from './../utils/gameBoard';
-import levels from '../constants/levels';
+import { movePlayer } from '../actions/playerActions';
+import directions from '../constants/directions';
 
-/*
- const boardExample = Immutable.fromJS([
- [3,3,3,3,3,3,0],
- [3,1,0,0,0,3,3],
- [3,0,2,2,0,0,3],
- [3,0,3,0,0,0,3],
- [3,0,0,0,0,0,3],
- [3,3,3,3,3,3,3],
- ]);
-
- const solutionExample = Immutable.fromJS([
- {
- row: 3,
- col: 3,
- },
- {
- row: 3,
- col: 5,
- },
- ]);
-
- */
+// TODO: use all the state and actions and stuff in this component
+// TODO: also remember to handle the load level stuff here boiiii
 
 const styles = StyleSheet.create({
   container: {
@@ -47,47 +27,34 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class GameScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    const level = levels.get(props.navigation.state.params.level.toString());
-    this.state = {
-      board: level.get('board'),
-      solution: level.get('solution'),
-      solved: false,
-    };
-
-    this.updateLocation = this.updateLocation.bind(this);
-  }
-
-  updateLocation(direction) {
-    console.log(direction);
-    const newBoard = updateBoard(this.state.board, direction);
-    const solved = isSolved(newBoard, this.state.solution);
-    console.log(solved);
-    this.setState({
-      board: newBoard,
-      solved,
-    });
-  }
-
-  render() {
+class GameScreen extends React.Component {
+ render() {
+    console.log('this.props', this.props);
     return <View style={styles.container}>
       <View style={styles.gameBoard}>
-        <Text>{JSON.stringify(this.props.navigation.state)}</Text>
-        <Text>{this.state.solved ? 'WELL DONE!' : 'Do the thing'}</Text>
-        <BoardView board={this.state.board} solution={this.state.solution}/>
+        <Text>{`Level ${this.props.gameState.get('level')}`}</Text>
+        <Text>{this.props.gameState.get('solved') ? 'WELL DONE!' : 'Do the thing'}</Text>
+        <BoardView board={this.props.gameState.get('board')}/>
       </View>
       <View style={styles.controls}>
         <Text>Controller thing</Text>
-        <Button onPress={() => this.updateLocation('up')} title="Up" color="red"/>
+        <Button onPress={() => this.props.movePlayer(directions.up)} title="Up" color="red"/>
         <View style={{flexDirection: 'row'}}>
-          <Button onPress={() => this.updateLocation('left')} title="Left" color="red"/>
+          <Button onPress={() => this.props.movePlayer(directions.left)} title="Left" color="red"/>
           <View/>
-          <Button onPress={() => this.updateLocation('right')} title="Right" color="red"/>
+          <Button onPress={() => this.props.movePlayer(directions.right)} title="Right" color="red"/>
         </View>
-        <Button onPress={() => this.updateLocation('down')} title="Down" color="red"/>
+        <Button onPress={() => this.props.movePlayer(directions.down)} title="Down" color="red"/>
       </View>
     </View>
   }
 }
+
+// TODO: back navigation
+
+export default connect(state => ({
+    gameState: state.gameState,
+  }), dispatch => ({
+    movePlayer: (direction) => dispatch(movePlayer(direction))
+  })
+)(GameScreen);
