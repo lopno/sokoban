@@ -25,7 +25,6 @@ function nav(state = initialNavState, action) {
      break;
      */
     default:
-      console.log('state', state, 'action', action);
       nextState = AppNavigator.router.getStateForAction(action, state);
       break;
   }

@@ -2,7 +2,6 @@ import Immutable from 'immutable';
 import directions from '../constants/directions';
 import boardElements from '../constants/boardElements';
 
-// TODO: fix this logic -- make tests pass
 function updateBoard(board, playerPos, nextTile, direction, shouldPush) {
   const currentTile = board.getIn([playerPos.get('row'), playerPos.get('col')]);
   const newPlayerPos = updatePlayerPos(playerPos, direction);
@@ -56,7 +55,7 @@ function isMoveValid(board, playerPos, direction) {
       shouldPush: false,
     };
   }
-  if (nextTile === boardElements.box || boardElements.boxOnGoal) {
+  if (nextTile === boardElements.box || nextTile === boardElements.boxOnGoal) {
     const nextBoxTile = getNextTile(board, playerPos, direction, true);
     if (nextBoxTile === boardElements.floor || nextBoxTile === boardElements.goal) {
       return {
@@ -95,10 +94,15 @@ function getPlayerPos(board) {
   });
 }
 
+function undoMove(board, playerPos, move) {
+  return board;
+}
+
 module.exports = {
   updateBoard,
   updatePlayerPos,
   isSolved,
   isMoveValid,
   getPlayerPos,
+  undoMove,
 };
