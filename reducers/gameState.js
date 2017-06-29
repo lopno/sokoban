@@ -23,7 +23,6 @@ const gameState = (state = initialState, action) => {
     case actions.playerMove:
       const validMove = isMoveValid(state.get('board'), state.get('playerPos'), action.direction);
       if (validMove) {
-        // action.direction, validMove.shouldPush
         const updatedBoard = updateBoard(
           state.get('board'),
           state.get('playerPos'),
@@ -38,23 +37,25 @@ const gameState = (state = initialState, action) => {
                 .set('playerPos', updatePlayerPos(state.get('playerPos'), action.direction))
                 .set('route', state.get('route').push(action.direction))
                 .set('solved', levelSolved)
-            // .set('levelsSolved', state.get('levelsSolved').push(state.get('level')))
+                .set('levelsSolved', levelSolved
+                  ? state.get('levelsSolved').push(state.get('level'))
+                  : state.get('levelsSolved'))
           );
       }
       return state;
     case actions.playerMoveUndo:
-      return state;
+      return state; // TODO
     case actions.levelLoad:
-      const board = levels.get(`${action.level}`);
+      const loadedBoard = levels.get(`${action.level}`);
       return state
         .withMutations(state =>
           state
             .set('level', action.level)
-            .set('board', board)
-            .set('playerPos', getPlayerPos(board))
+            .set('board', loadedBoard)
+            .set('playerPos', getPlayerPos(loadedBoard))
+            .set('solved', false)
+            .set('route', new Immutable.List())
         );
-    case actions.levelReset:
-      return state;
     default:
       return state;
   }

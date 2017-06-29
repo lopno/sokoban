@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import BoardView from './BoardView';
 import { movePlayer } from '../actions/playerActions';
+import { loadLevel } from '../actions/levelActions';
 import directions from '../constants/directions';
 
 // TODO: use all the state and actions and stuff in this component
@@ -28,10 +29,15 @@ const styles = StyleSheet.create({
 });
 
 class GameScreen extends React.Component {
- render() {
+  render() {
     console.log('this.props', this.props);
     return <View style={styles.container}>
       <View style={styles.gameBoard}>
+        <Button
+          onPress={() => this.props.loadLevel(this.props.gameState.get('level'))}
+          title="Reset"
+          color="red"
+        />
         <Text>{`Level ${this.props.gameState.get('level')}`}</Text>
         <Text>{this.props.gameState.get('solved') ? 'WELL DONE!' : 'Do the thing'}</Text>
         <BoardView board={this.props.gameState.get('board')}/>
@@ -55,6 +61,7 @@ class GameScreen extends React.Component {
 export default connect(state => ({
     gameState: state.gameState,
   }), dispatch => ({
-    movePlayer: (direction) => dispatch(movePlayer(direction))
+    movePlayer: (direction) => dispatch(movePlayer(direction)),
+    loadLevel: (level) => dispatch(loadLevel(level))
   })
 )(GameScreen);
