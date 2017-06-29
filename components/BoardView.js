@@ -1,45 +1,45 @@
 'use strict';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import dimensions from 'Dimensions';
+
+const boxImage = require('../assets/img/box.png');
+const boxOnGoalImage = require('../assets/img/boxOnGoal.png');
+const floorImage = require('../assets/img/floor.png');
+const goalImage = require('../assets/img/goal.png');
+const playerImage = require('../assets/img/player.png');
+const wallImage = require('../assets/img/wall.png');
 
 import boardElements from '../constants/boardElements';
 const { width, height } = dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#758C8E',
   },
   tile: {
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  active: {
-    backgroundColor: 'red'
-  }
 });
 
-function getCellColor(cellValue) {
-  switch (cellValue) {
-    case boardElements.floor: return '#BEE1D2';
-    case boardElements.player: return 'red';
-    case boardElements.playerOnGoal: return 'red';
-    case boardElements.box: return 'blue';
-    case boardElements.goal: return 'green';
-    case boardElements.boxOnGoal: return 'yellow';
-    case boardElements.wall: return 'black';
-    default: return '#BEE1D2';
+function getTileImagePath(boardElement) {
+  switch (boardElement) {
+    case boardElements.wall: return wallImage;
+    case boardElements.player: return playerImage;
+    case boardElements.playerOnGoal: return playerImage;
+    case boardElements.box: return boxImage;
+    case boardElements.boxOnGoal: return boxOnGoalImage;
+    case boardElements.goal: return goalImage;
+    default: return floorImage;
   }
 }
 
 export default class BoardView extends React.Component {
   render() {
     const CELL_SIZE = Math.floor(width / this.props.board.get(0).size);
-    const CELL_PADDING = Math.floor(CELL_SIZE * .05); // 5% of the cell size
-    const BORDER_RADIUS = CELL_PADDING * 2;
-    const TILE_SIZE = CELL_SIZE - CELL_PADDING * 2;
 
     return <View
       style={[
@@ -50,30 +50,30 @@ export default class BoardView extends React.Component {
         }
       ]}
     >
+      <Image
+        source={{uri: '../assets/img/box.png'}}
+        style={{
+          width: 10,
+          height: 10
+        }}
+      />
       {this.props.board.map((row, rowIndex) =>
         row.map((tile, colIndex) => {
           const key = `${rowIndex}${colIndex}`;
           const position = {
-            left: colIndex * CELL_SIZE + CELL_PADDING,
-            top: rowIndex * CELL_SIZE + CELL_PADDING,
-            width: TILE_SIZE,
-            height: TILE_SIZE,
-            borderRadius: BORDER_RADIUS,
+            left: colIndex * CELL_SIZE,
+            top: rowIndex * CELL_SIZE,
+            width: CELL_SIZE,
+            height: CELL_SIZE,
           };
-          return <View
+          return <Image
             key={key}
             style={[
               styles.tile,
-              position,
-              {
-                backgroundColor: getCellColor(this.props.board.getIn([rowIndex, colIndex])),
-              },
+              position
             ]}
-          >
-            <Text>
-              {tile}
-            </Text>
-          </View>;
+            source={getTileImagePath(tile)}
+          />;
         })
       )}
     </View>;

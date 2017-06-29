@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import BoardView from './BoardView';
 import { movePlayer } from '../actions/playerActions';
@@ -11,20 +12,32 @@ import directions from '../constants/directions';
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  header: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    marginTop: 5,
+  },
+  headerItem: {
+    flex:1,
+    alignItems: 'center',
+  },
   gameBoard: {
-    flex: 2,
+    flex: 6,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   controls: {
-    flex: 1
+    flex: 2,
   },
 });
 
@@ -32,18 +45,25 @@ class GameScreen extends React.Component {
   render() {
     console.log('this.props', this.props);
     return <View style={styles.container}>
-      <View style={styles.gameBoard}>
-        <Button
+      <View style={styles.header}>
+        <Text style={styles.headerItem}>
+          {`Level ${this.props.gameState.get('level')}`}
+        </Text>
+        <TouchableHighlight onPress={() => {}} style={styles.headerItem}>
+          <Icon name='md-undo' size={40}/>
+        </TouchableHighlight>
+        <TouchableHighlight
           onPress={() => this.props.loadLevel(this.props.gameState.get('level'))}
-          title="Reset"
-          color="red"
-        />
-        <Text>{`Level ${this.props.gameState.get('level')}`}</Text>
+          style={styles.headerItem}
+        >
+          <Icon name='md-refresh' size={40}/>
+        </TouchableHighlight>
+      </View>
+      <View style={styles.gameBoard}>
         <Text>{this.props.gameState.get('solved') ? 'WELL DONE!' : 'Do the thing'}</Text>
         <BoardView board={this.props.gameState.get('board')}/>
       </View>
       <View style={styles.controls}>
-        <Text>Controller thing</Text>
         <Button onPress={() => this.props.movePlayer(directions.up)} title="Up" color="red"/>
         <View style={{flexDirection: 'row'}}>
           <Button onPress={() => this.props.movePlayer(directions.left)} title="Left" color="red"/>
