@@ -10,7 +10,7 @@ import {
 } from '../utils/gameBoard';
 
 const initialState = Immutable.fromJS({
-  levelsSolved: [],
+  levelsSolved: {},
   level: null,
   board: null,
   playerPos: null,
@@ -31,16 +31,16 @@ const gameState = (state = initialState, action) => {
           validMove.shouldPush);
         const levelSolved = isSolved(updatedBoard);
         return state
-          .withMutations(state =>
-              state
-                .set('board', updatedBoard)
-                .set('playerPos', updatePlayerPos(state.get('playerPos'), action.direction))
-                .set('route', state.get('route').push(action.direction))
-                .set('solved', levelSolved)
-                .set('levelsSolved', levelSolved
-                  ? state.get('levelsSolved').push(state.get('level'))
-                  : state.get('levelsSolved'))
-          );
+          .withMutations(state => {
+            const tempState = state
+              .set('board', updatedBoard)
+              .set('playerPos', updatePlayerPos(state.get('playerPos'), action.direction))
+              .set('route', state.get('route').push(action.direction))
+              .set('solved', levelSolved);
+              return levelSolved
+                ? tempState.setIn(['levelsSolved', state.get('level')], true)
+                : tempState;
+          });
       }
       return state;
     case actions.playerMoveUndo:
