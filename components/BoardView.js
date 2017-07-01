@@ -15,9 +15,6 @@ import boardElements from '../constants/boardElements';
 const { width, height } = dimensions.get('window');
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#758C8E',
-  },
   tile: {
     position: 'absolute',
     justifyContent: 'center',
@@ -42,21 +39,11 @@ export default class BoardView extends React.Component {
     const CELL_SIZE = Math.floor(width / this.props.board.get(0).size);
 
     return <View
-      style={[
-        styles.container,
-        {
+      style={{
           width,
           height: CELL_SIZE * this.props.board.size,
-        }
-      ]}
-    >
-      <Image
-        source={{uri: '../assets/img/box.png'}}
-        style={{
-          width: 10,
-          height: 10
         }}
-      />
+    >
       {this.props.board.map((row, rowIndex) =>
         row.map((tile, colIndex) => {
           const key = `${rowIndex}${colIndex}`;

@@ -3,19 +3,17 @@ import { StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import BoardView from './BoardView';
+import LevelSolvedModal from './LevelSolvedModal';
 import { movePlayer } from '../actions/playerActions';
 import { loadLevel } from '../actions/levelActions';
 import directions from '../constants/directions';
-
-// TODO: use all the state and actions and stuff in this component
-// TODO: also remember to handle the load level stuff here boiiii
 
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#fff',
+    backgroundColor: '#758C8E',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -30,6 +28,11 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: 'center',
   },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    // alignContent: 'center',
+  },
   gameBoard: {
     flex: 6,
     alignItems: 'center',
@@ -42,9 +45,44 @@ const styles = StyleSheet.create({
 });
 
 class GameScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: false,
+    };
+    this.closeModal = this.closeModal.bind(this);
+    this.loadNextLevel = this.loadNextLevel.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.gameState.get('solved') === true) {
+      this.setState({
+        showModal: true,
+      });
+    }
+  }
+
+  closeModal() {
+    this.setState({
+      showModal: false,
+    });
+  }
+
+  loadNextLevel() {
+    this.props.loadLevel(this.props.gameState.get('level') + 1);
+    this.closeModal();
+  }
+
   render() {
-    console.log('this.props', this.props);
+    console.log('showModal', this.state.showModal);
     return <View style={styles.container}>
+      <View style={styles.modal}>
+        <LevelSolvedModal
+          visible={this.state.showModal}
+          onNextLevelPressed={this.loadNextLevel}
+          onRequestClose={this.closeModal}
+        />
+      </View>
       <View style={styles.header}>
         <Text style={styles.headerItem}>
           {`Level ${this.props.gameState.get('level')}`}

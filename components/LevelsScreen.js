@@ -85,16 +85,9 @@ class LevelsScreen extends React.Component {
   }
 }
 
-LevelsScreen.navigationOptions = {
-  title: 'Title: Levels Screen',
-};
-
 export default connect(state => ({
     gameState: state.gameState,
   }), dispatch => ({
-    loadLevel: (level) => {
-      console.log('level', level);
-      return dispatch(loadLevel(level));
-    }
+    loadLevel: (level) => dispatch(loadLevel(level))
   })
 )(LevelsScreen);
