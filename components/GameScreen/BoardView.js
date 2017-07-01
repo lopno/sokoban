@@ -8,10 +8,14 @@ const boxImage = require('../../assets/img/box.png');
 const boxOnGoalImage = require('../../assets/img/boxOnGoal.png');
 const floorImage = require('../../assets/img/floor.png');
 const goalImage = require('../../assets/img/goal.png');
-const playerImage = require('../../assets/img/player.png');
+const playerDownImage = require('../../assets/img/playerDown.png');
+const playerUpImage = require('../../assets/img/playerUp.png');
+const playerLeftImage = require('../../assets/img/playerLeft.png');
+const playerRightImage = require('../../assets/img/playerRight.png');
 const wallImage = require('../../assets/img/wall.png');
 
 import boardElements from '../../constants/boardElements';
+import directions from '../../constants/directions';
 const { width, height } = dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -22,11 +26,18 @@ const styles = StyleSheet.create({
   },
 });
 
-function getTileImagePath(boardElement) {
+function getTileImagePath(boardElement, direction = null) {
   switch (boardElement) {
     case boardElements.wall: return wallImage;
-    case boardElements.player: return playerImage;
-    case boardElements.playerOnGoal: return playerImage;
+    case boardElements.playerOnGoal:
+    case boardElements.player: switch (direction) {
+      case directions.up: return playerUpImage;
+      case directions.left: return playerLeftImage;
+      case directions.right: return playerRightImage;
+      case directions.down:
+      default:
+        return playerDownImage;
+    }
     case boardElements.box: return boxImage;
     case boardElements.boxOnGoal: return boxOnGoalImage;
     case boardElements.goal: return goalImage;
@@ -53,24 +64,41 @@ export default class BoardView extends React.Component {
             width: CELL_SIZE,
             height: CELL_SIZE,
           };
-          return <Image
-            key={key}
-            style={[
-              styles.tile,
-              position
-            ]}
-            source={getTileImagePath(tile)}
-          />;
+
+          return <View>
+            {tile !== boardElements.floor
+              ? <Image
+                key={`${key}floor`}
+                style={[
+                  styles.tile,
+                  position
+                ]}
+                source={getTileImagePath(floorImage)}
+              />
+              : null}
+            <Image
+              key={key}
+              style={[
+                styles.tile,
+                position
+              ]}
+              source={getTileImagePath(tile, this.props.playerDirection)}
+            />
+
+          </View>;
         })
       )}
     </View>;
   }
 }
 
-BoardView.props = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  board: PropTypes.any.isRequired, // TODO: describe immutable structure
+BoardView.propTypes = {
+  board: PropTypes.any.isRequired,
+  playerDirection: PropTypes.string
+};
+
+BoardView.defaultProps = {
+  playerDirection: directions.down,
 };
 
 module.exports = BoardView;

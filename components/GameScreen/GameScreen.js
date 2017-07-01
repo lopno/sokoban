@@ -57,9 +57,12 @@ class GameScreen extends React.Component {
     super(props);
     this.state = {
       showModal: false,
+      playerDirection: directions.down,
     };
     this.closeModal = this.closeModal.bind(this);
     this.loadNextLevel = this.loadNextLevel.bind(this);
+    this.movePlayerDirection = this.movePlayerDirection.bind(this);
+    this.onBackPressed = this.onBackPressed.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -81,6 +84,17 @@ class GameScreen extends React.Component {
     this.closeModal();
   }
 
+  movePlayerDirection(direction) {
+    this.setState({
+      playerDirection: direction,
+    });
+    this.props.movePlayer(direction);
+  }
+
+  onBackPressed() {
+    this.props.navigation.navigate('LevelsScreen');
+  }
+
   render() {
     return <View style={styles.container}>
       <View style={styles.modal}>
@@ -91,7 +105,7 @@ class GameScreen extends React.Component {
         />
       </View>
       <View style={styles.header}>
-        <TouchableHighlight onPress={() => {}} style={styles.headerItem}>
+        <TouchableHighlight onPress={this.onBackPressed} style={styles.headerItem}>
           <Icon name='md-arrow-back' size={40} color='white'/>
         </TouchableHighlight>
         <TouchableHighlight onPress={() => {}} style={styles.headerItem}>
@@ -105,15 +119,18 @@ class GameScreen extends React.Component {
         </TouchableHighlight>
       </View>
       <View style={styles.gameBoard}>
-        <BoardView board={this.props.gameState.get('board')}/>
+        <BoardView
+          board={this.props.gameState.get('board')}
+          playerDirection={this.state.playerDirection}
+        />
       </View>
       <View style={styles.controls}>
         <View style={styles.controlsContainer}>
           <Controls
-            onPressUp={() => this.props.movePlayer(directions.up)}
-            onPressDown={() => this.props.movePlayer(directions.down)}
-            onPressLeft={() => this.props.movePlayer(directions.left)}
-            onPressRight={() => this.props.movePlayer(directions.right)}
+            onPressUp={() => this.movePlayerDirection(directions.up)}
+            onPressDown={() => this.movePlayerDirection(directions.down)}
+            onPressLeft={() => this.movePlayerDirection(directions.left)}
+            onPressRight={() => this.movePlayerDirection(directions.right)}
           />
         </View>
       </View>
@@ -121,7 +138,7 @@ class GameScreen extends React.Component {
   }
 }
 
-// TODO: back navigation
+// TODO: on hardware back navigation
 
 export default connect(state => ({
     gameState: state.gameState,
