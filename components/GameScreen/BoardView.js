@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import dimensions from 'Dimensions';
 
-const boxImage = require('../assets/img/box.png');
-const boxOnGoalImage = require('../assets/img/boxOnGoal.png');
-const floorImage = require('../assets/img/floor.png');
-const goalImage = require('../assets/img/goal.png');
-const playerImage = require('../assets/img/player.png');
-const wallImage = require('../assets/img/wall.png');
+const boxImage = require('../../assets/img/box.png');
+const boxOnGoalImage = require('../../assets/img/boxOnGoal.png');
+const floorImage = require('../../assets/img/floor.png');
+const goalImage = require('../../assets/img/goal.png');
+const playerImage = require('../../assets/img/player.png');
+const wallImage = require('../../assets/img/wall.png');
 
-import boardElements from '../constants/boardElements';
+import boardElements from '../../constants/boardElements';
 const { width, height } = dimensions.get('window');
 
 const styles = StyleSheet.create({

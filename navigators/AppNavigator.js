@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 
-import GameScreen from '../components/GameScreen';
-import LevelsScreen from '../components/LevelsScreen';
+import GameScreen from '../components/GameScreen/GameScreen';
+import LevelsScreen from '../components/LevelsScreen/LevelsScreen';
 
 export const AppNavigator = StackNavigator({
   LevelsScreen: { screen: LevelsScreen },

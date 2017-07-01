@@ -4,9 +4,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import BoardView from './BoardView';
 import LevelSolvedModal from './LevelSolvedModal';
-import { movePlayer } from '../actions/playerActions';
-import { loadLevel } from '../actions/levelActions';
-import directions from '../constants/directions';
+import { movePlayer } from '../../actions/playerActions';
+import { loadLevel } from '../../actions/levelActions';
+import directions from '../../constants/directions';
 
 const styles = StyleSheet.create({
   container: {
@@ -84,17 +84,17 @@ class GameScreen extends React.Component {
         />
       </View>
       <View style={styles.header}>
-        <Text style={styles.headerItem}>
-          {`Level ${this.props.gameState.get('level')}`}
-        </Text>
         <TouchableHighlight onPress={() => {}} style={styles.headerItem}>
-          <Icon name='md-undo' size={40}/>
+          <Icon name='md-arrow-back' size={40} color='white'/>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => {}} style={styles.headerItem}>
+          <Icon name='md-undo' size={40} color='white'/>
         </TouchableHighlight>
         <TouchableHighlight
           onPress={() => this.props.loadLevel(this.props.gameState.get('level'))}
           style={styles.headerItem}
         >
-          <Icon name='md-refresh' size={40}/>
+          <Icon name='md-refresh' size={40} color='white'/>
         </TouchableHighlight>
       </View>
       <View style={styles.gameBoard}>

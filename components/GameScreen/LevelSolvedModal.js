@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import { TouchableHighlight, View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
+import fontSizes from '../../constants/fontSizes';
+import fontFamilies from '../../constants/fontFamilies';
+import styleConstants from '../../constants/style';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,10 +21,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerText: {
-    fontFamily: 'sans-serif',
+    fontFamily: fontFamilies.normal,
     fontWeight: '900',
     color: 'white',
-    fontSize: 20,
+    fontSize: fontSizes.large,
   },
   buttonContainer: {
     flex: 2,
@@ -36,7 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   round: {
-    borderRadius: 5,
+    borderRadius: styleConstants.borderRadius,
   }
 });
 
