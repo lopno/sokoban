@@ -3,10 +3,12 @@ import { StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import BoardView from './BoardView';
+import Controls from './Controls';
 import LevelSolvedModal from './LevelSolvedModal';
+import directions from '../../constants/directions';
 import { movePlayer } from '../../actions/playerActions';
 import { loadLevel } from '../../actions/levelActions';
-import directions from '../../constants/directions';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -40,8 +42,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   controls: {
-    flex: 2,
+    flex: 3,
+    width: '100%',
+    height: '100%',
   },
+  controlsContainer: {
+    width: '100%',
+    height: '100%',
+  }
 });
 
 class GameScreen extends React.Component {
@@ -74,7 +82,6 @@ class GameScreen extends React.Component {
   }
 
   render() {
-    console.log('showModal', this.state.showModal);
     return <View style={styles.container}>
       <View style={styles.modal}>
         <LevelSolvedModal
@@ -98,17 +105,17 @@ class GameScreen extends React.Component {
         </TouchableHighlight>
       </View>
       <View style={styles.gameBoard}>
-        <Text>{this.props.gameState.get('solved') ? 'WELL DONE!' : 'Do the thing'}</Text>
         <BoardView board={this.props.gameState.get('board')}/>
       </View>
       <View style={styles.controls}>
-        <Button onPress={() => this.props.movePlayer(directions.up)} title="Up" color="red"/>
-        <View style={{flexDirection: 'row'}}>
-          <Button onPress={() => this.props.movePlayer(directions.left)} title="Left" color="red"/>
-          <View/>
-          <Button onPress={() => this.props.movePlayer(directions.right)} title="Right" color="red"/>
+        <View style={styles.controlsContainer}>
+          <Controls
+            onPressUp={() => this.props.movePlayer(directions.up)}
+            onPressDown={() => this.props.movePlayer(directions.down)}
+            onPressLeft={() => this.props.movePlayer(directions.left)}
+            onPressRight={() => this.props.movePlayer(directions.right)}
+          />
         </View>
-        <Button onPress={() => this.props.movePlayer(directions.down)} title="Down" color="red"/>
       </View>
     </View>
   }
