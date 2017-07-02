@@ -6,14 +6,16 @@ import { NavigationActions } from 'react-navigation';
 import LevelButton from './LevelButton';
 
 import { loadLevel } from '../../actions/levelActions';
+import colors from'../../constants/colors';
 
 const styles = {
   container: {
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    // flexWrap: 'wrap',
     justifyContent: 'space-around',
+    backgroundColor: colors.lightGray,
+
   },
   row: {
     flex: 1,

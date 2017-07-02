@@ -8,6 +8,7 @@ import LevelSolvedModal from './LevelSolvedModal';
 import directions from '../../constants/directions';
 import { movePlayer } from '../../actions/playerActions';
 import { loadLevel } from '../../actions/levelActions';
+import colors from '../../constants/colors';
 
 
 const styles = StyleSheet.create({
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#758C8E',
+    backgroundColor: colors.lightGray,
     alignItems: 'center',
     justifyContent: 'center',
   },
