@@ -141,6 +141,11 @@ class LevelsScreen extends React.Component {
   }
 }
 
+
+LevelsScreen.navigationOptions = {
+  header: null,
+};
+
 export default connect(state => ({
     gameState: state.gameState,
   }), dispatch => ({

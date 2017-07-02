@@ -139,6 +139,10 @@ class GameScreen extends React.Component {
   }
 }
 
+GameScreen.navigationOptions = {
+  header: null,
+};
+
 // TODO: on hardware back navigation
 
 export default connect(state => ({
