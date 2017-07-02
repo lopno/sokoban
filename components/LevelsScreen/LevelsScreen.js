@@ -43,8 +43,6 @@ class LevelsScreen extends React.Component {
   }
 
   render() {
-    // console.log('levelsScreen', this.props.gameState);
-    // console.log('has good shit:', this.props.gameState.getIn);
     return (
       <View style={styles.container}>
         <View style={styles.row}>

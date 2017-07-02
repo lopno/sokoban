@@ -73,6 +73,29 @@ describe('updateBoard', () => {
     expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
   });
 
+  it('should move player and box to the right if there is space', () => {
+    const playerPos = Immutable.fromJS({
+      row: 1,
+      col: 2,
+    });
+    const nextTile = '$';
+    const shouldPush = true;
+    const board = Immutable.fromJS(
+      [
+        ['#', '#', '#', '#', '#', '#', '#'],
+        ['#', ' ', '@', '$', ' ', '.', '#'],
+        ['#', '#', '#', '#', '#', '#', '#'],
+      ]);
+    const direction = directions.right;
+    const newBoard = Immutable.fromJS(
+      [
+        ['#', '#', '#', '#', '#', '#', '#'],
+        ['#', ' ', ' ', '@', '$', '.', '#'],
+        ['#', '#', '#', '#', '#', '#', '#'],
+      ]);
+    expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
+  });
+
   it('should move player and box up when space is free', () => {
     const playerPos = Immutable.fromJS({
       row: 2,
@@ -228,7 +251,7 @@ describe('isMoveValid', () => {
     ]);
     const direction = directions.up;
     expect(gameBoard.isMoveValid(board, playerPos, direction)).toEqual(false);
-  })
+  });
 });
 
 describe('isSolved', () => {

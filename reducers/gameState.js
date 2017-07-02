@@ -29,10 +29,9 @@ const gameState = (state = initialState, action) => {
         ? incoming
         : state;
     case actions.playerMove:
-      const validMove =
-        isMoveValid(state.get('board'), state.get('playerPos'), action.direction)
-        && !state.get('solved');
-      if (validMove) {
+      const validMove = isMoveValid(state.get('board'), state.get('playerPos'), action.direction);
+      if (validMove && !state.get('solved')) {
+        console.log(validMove);
         const updatedBoard = updateBoard(
           state.get('board'),
           state.get('playerPos'),

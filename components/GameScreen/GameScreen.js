@@ -81,7 +81,7 @@ class GameScreen extends React.Component {
   }
 
   loadNextLevel() {
-    this.props.loadLevel(this.props.gameState.get('level') + 1);
+    this.props.loadLevel((parseInt(this.props.gameState.get('level'), 10) || 0) + 1);
     this.closeModal();
   }
 
