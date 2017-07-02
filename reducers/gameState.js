@@ -1,4 +1,6 @@
 import Immutable from 'immutable';
+import { AsyncStorage } from 'react-native';
+import { REHYDRATE } from 'redux-persist/constants';
 import actions from '../constants/actions';
 import levels from '../constants/levels';
 import {
@@ -19,9 +21,17 @@ const initialState = Immutable.fromJS({
 });
 
 const gameState = (state = initialState, action) => {
+  console.log('action', action.type);
   switch (action.type) {
+    case REHYDRATE:
+      const incoming = Immutable.fromJS(action.payload.gameState);
+      return incoming
+        ? incoming
+        : state;
     case actions.playerMove:
-      const validMove = isMoveValid(state.get('board'), state.get('playerPos'), action.direction);
+      const validMove =
+        isMoveValid(state.get('board'), state.get('playerPos'), action.direction)
+        && !state.get('solved');
       if (validMove) {
         const updatedBoard = updateBoard(
           state.get('board'),
@@ -30,17 +40,26 @@ const gameState = (state = initialState, action) => {
           action.direction,
           validMove.shouldPush);
         const levelSolved = isSolved(updatedBoard);
-        return state
+        const newState = state
           .withMutations(state => {
             const tempState = state
               .set('board', updatedBoard)
               .set('playerPos', updatePlayerPos(state.get('playerPos'), action.direction))
               .set('route', state.get('route').push(action.direction))
               .set('solved', levelSolved);
-              return levelSolved
-                ? tempState.setIn(['levelsSolved', state.get('level')], true)
-                : tempState;
+            return levelSolved
+              ? tempState.setIn(['levelsSolved', state.get('level')], true)
+              : tempState;
           });
+        if (levelSolved) {
+          try {
+            AsyncStorage.setItem('@sokoban:gameState', JSON.stringify(newState));
+          }
+          catch (error) {
+            console.log('Error persisting data:', error);
+          }
+        }
+        return newState;
       }
       return state;
     case actions.playerMoveUndo:
