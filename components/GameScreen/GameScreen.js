@@ -68,7 +68,8 @@ class GameScreen extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.gameState.get('solved') === true) {
+    if (this.props.gameState.get('solved') === false
+      && nextProps.gameState.get('solved') === true) {
       this.setState({
         showModal: true,
       });
@@ -94,7 +95,7 @@ class GameScreen extends React.Component {
   }
 
   onBackPressed() {
-    this.props.navigation.navigate('LevelsScreen');
+    this.props.navigation.goBack();
   }
 
   onUndoPressed() {
