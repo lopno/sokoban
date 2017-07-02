@@ -6,3 +6,10 @@ export function movePlayer(direction) {
     direction,
   };
 }
+
+export function undoMove(direction) {
+  return {
+    type: actions.playerMoveUndo,
+    direction,
+  };
+}

@@ -1,11 +1,11 @@
 import Immutable from 'immutable';
-import { AsyncStorage } from 'react-native';
 import { REHYDRATE } from 'redux-persist/constants';
 import actions from '../constants/actions';
 import levels from '../constants/levels';
 import {
   isMoveValid,
   updateBoard,
+  undoMove,
   updatePlayerPos,
   isSolved,
   getPlayerPos
@@ -31,7 +31,6 @@ const gameState = (state = initialState, action) => {
     case actions.playerMove:
       const validMove = isMoveValid(state.get('board'), state.get('playerPos'), action.direction);
       if (validMove && !state.get('solved')) {
-        console.log(validMove);
         const updatedBoard = updateBoard(
           state.get('board'),
           state.get('playerPos'),
@@ -50,19 +49,19 @@ const gameState = (state = initialState, action) => {
               ? tempState.setIn(['levelsSolved', state.get('level')], true)
               : tempState;
           });
-        if (levelSolved) {
-          try {
-            AsyncStorage.setItem('@sokoban:gameState', JSON.stringify(newState));
-          }
-          catch (error) {
-            console.log('Error persisting data:', error);
-          }
-        }
         return newState;
       }
       return state;
     case actions.playerMoveUndo:
-      return state; // TODO
+      const latestMove = state.get('route').last();
+      return latestMove
+        ? state.withMutations(state =>
+          state
+            .set('board', undoMove(state.get('board'), state.get('playerPos'), latestMove))
+            .set('playerPos', updatePlayerPos(state.get('playerPos'), latestMove, -1))
+            .set('route', state.get('route').pop())
+        )
+        : state;
     case actions.levelLoad:
       const loadedBoard = levels.get(`${action.level}`);
       return state

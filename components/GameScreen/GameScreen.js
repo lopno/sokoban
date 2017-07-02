@@ -6,7 +6,7 @@ import BoardView from './BoardView';
 import Controls from './Controls';
 import LevelSolvedModal from './LevelSolvedModal';
 import directions from '../../constants/directions';
-import { movePlayer } from '../../actions/playerActions';
+import { movePlayer, undoMove } from '../../actions/playerActions';
 import { loadLevel } from '../../actions/levelActions';
 import colors from '../../constants/colors';
 
@@ -64,6 +64,7 @@ class GameScreen extends React.Component {
     this.loadNextLevel = this.loadNextLevel.bind(this);
     this.movePlayerDirection = this.movePlayerDirection.bind(this);
     this.onBackPressed = this.onBackPressed.bind(this);
+    this.onUndoPressed = this.onUndoPressed.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -96,6 +97,10 @@ class GameScreen extends React.Component {
     this.props.navigation.navigate('LevelsScreen');
   }
 
+  onUndoPressed() {
+    this.props.undoMove();
+  }
+
   render() {
     return <View style={styles.container}>
       <View style={styles.modal}>
@@ -109,7 +114,7 @@ class GameScreen extends React.Component {
         <TouchableHighlight onPress={this.onBackPressed} style={styles.headerItem}>
           <Icon name='md-arrow-back' size={40} color='white'/>
         </TouchableHighlight>
-        <TouchableHighlight onPress={() => {}} style={styles.headerItem}>
+        <TouchableHighlight onPress={this.onUndoPressed} style={styles.headerItem}>
           <Icon name='md-undo' size={40} color='white'/>
         </TouchableHighlight>
         <TouchableHighlight
@@ -149,6 +154,7 @@ export default connect(state => ({
     gameState: state.gameState,
   }), dispatch => ({
     movePlayer: (direction) => dispatch(movePlayer(direction)),
-    loadLevel: (level) => dispatch(loadLevel(level))
+    loadLevel: (level) => dispatch(loadLevel(level)),
+    undoMove: () => dispatch(undoMove()),
   })
 )(GameScreen);

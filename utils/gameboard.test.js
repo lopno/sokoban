@@ -14,15 +14,15 @@ describe('updateBoard', () => {
     const shouldPush = false;
 
     const board = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@',' '],
-      [' ',' ',' '],
+      [' ', ' ', ' '],
+      [' ', '@', ' '],
+      [' ', ' ', ' '],
     ]);
     const direction = directions.left;
     const newBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      ['@',' ',' '],
-      [' ',' ',' '],
+      [' ', ' ', ' '],
+      ['@', ' ', ' '],
+      [' ', ' ', ' '],
     ]);
 
     expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
@@ -36,15 +36,15 @@ describe('updateBoard', () => {
     const nextTile = '$';
     const shouldPush = true;
     const board = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','$','@'],
-      [' ',' ',' '],
+      [' ', ' ', ' '],
+      [' ', '$', '@'],
+      [' ', ' ', ' '],
     ]);
     const direction = directions.left;
     const newBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      ['$','@',' '],
-      [' ',' ',' '],
+      [' ', ' ', ' '],
+      ['$', '@', ' '],
+      [' ', ' ', ' '],
     ]);
 
     expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
@@ -59,15 +59,15 @@ describe('updateBoard', () => {
     const shouldPush = false;
 
     const board = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@',' '],
-      [' ',' ',' '],
+      [' ', ' ', ' '],
+      [' ', '@', ' '],
+      [' ', ' ', ' '],
     ]);
     const direction = directions.up;
     const newBoard = Immutable.fromJS([
-      [' ','@',' '],
-      [' ',' ',' '],
-      [' ',' ',' '],
+      [' ', '@', ' '],
+      [' ', ' ', ' '],
+      [' ', ' ', ' '],
     ]);
 
     expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
@@ -104,15 +104,15 @@ describe('updateBoard', () => {
     const nextTile = '$';
     const shouldPush = true;
     const board = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','$',' '],
-      [' ','@',' '],
+      [' ', ' ', ' '],
+      [' ', '$', ' '],
+      [' ', '@', ' '],
     ]);
     const direction = directions.up;
     const newBoard = Immutable.fromJS([
-      [' ','$',' '],
-      [' ','@',' '],
-      [' ',' ',' '],
+      [' ', '$', ' '],
+      [' ', '@', ' '],
+      [' ', ' ', ' '],
     ]);
 
     expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
@@ -126,15 +126,15 @@ describe('updateBoard', () => {
     const nextTile = ' ';
     const shouldPush = false;
     const board = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@',' '],
-      [' ',' ',' '],
+      [' ', ' ', ' '],
+      [' ', '@', ' '],
+      [' ', ' ', ' '],
     ]);
     const direction = directions.right;
     const newBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ',' ','@'],
-      [' ',' ',' '],
+      [' ', ' ', ' '],
+      [' ', ' ', '@'],
+      [' ', ' ', ' '],
     ]);
 
     expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
@@ -148,15 +148,15 @@ describe('updateBoard', () => {
     const nextTile = '$';
     const shouldPush = true;
     const board = Immutable.fromJS([
-      [' ',' ',' '],
-      ['@','$',' '],
-      [' ',' ',' '],
+      [' ', ' ', ' '],
+      ['@', '$', ' '],
+      [' ', ' ', ' '],
     ]);
     const direction = directions.right;
     const newBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@','$'],
-      [' ',' ',' '],
+      [' ', ' ', ' '],
+      [' ', '@', '$'],
+      [' ', ' ', ' '],
     ]);
 
     expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
@@ -170,15 +170,15 @@ describe('updateBoard', () => {
     const nextTile = ' ';
     const shouldPush = false;
     const board = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@',' '],
-      [' ',' ',' '],
+      [' ', ' ', ' '],
+      [' ', '@', ' '],
+      [' ', ' ', ' '],
     ]);
     const direction = directions.down;
     const newBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ',' ',' '],
-      [' ','@',' '],
+      [' ', ' ', ' '],
+      [' ', ' ', ' '],
+      [' ', '@', ' '],
     ]);
 
     expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
@@ -192,15 +192,15 @@ describe('updateBoard', () => {
     const nextTile = '$';
     const shouldPush = true;
     const board = Immutable.fromJS([
-      [' ','@',' '],
-      [' ','$',' '],
-      [' ',' ',' '],
+      [' ', '@', ' '],
+      [' ', '$', ' '],
+      [' ', ' ', ' '],
     ]);
     const direction = directions.down;
     const newBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@',' '],
-      [' ','$',' '],
+      [' ', ' ', ' '],
+      [' ', '@', ' '],
+      [' ', '$', ' '],
     ]);
 
     expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
@@ -258,9 +258,9 @@ describe('isSolved', () => {
   it('should return true for a solved board', () => {
     const board = Immutable.fromJS(
       [
-        ['*',' ',' '],
-        ['@','*',' '],
-        [' ',' ','*'],
+        ['*', ' ', ' '],
+        ['@', '*', ' '],
+        [' ', ' ', '*'],
       ]
     );
     expect(gameBoard.isSolved(board)).toBe(true);
@@ -268,12 +268,12 @@ describe('isSolved', () => {
 
   it('should return true for a solved board', () => {
     const board = Immutable.fromJS([
-      ['#','#','#','#','#','#',' '],
-      ['#',' ',' ',' ',' ','#','#'],
-      ['#',' ',' ','@',' ',' ','#'],
-      ['#',' ','#','*',' ','*','#'],
-      ['#',' ',' ',' ',' ',' ','#'],
-      ['#','#','#','#','#','#','#'],
+      ['#', '#', '#', '#', '#', '#', ' '],
+      ['#', ' ', ' ', ' ', ' ', '#', '#'],
+      ['#', ' ', ' ', '@', ' ', ' ', '#'],
+      ['#', ' ', '#', '*', ' ', '*', '#'],
+      ['#', ' ', ' ', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#', '#', '#'],
     ]);
 
     expect(gameBoard.isSolved(board)).toBe(true);
@@ -282,9 +282,9 @@ describe('isSolved', () => {
   it('should return false for a not solved board', () => {
     const board = Immutable.fromJS(
       [
-        ['.','$',' '],
-        ['@','$','.'],
-        [' ',' ',' '],
+        ['.', '$', ' '],
+        ['@', '$', '.'],
+        [' ', ' ', ' '],
       ]
     );
 
@@ -294,9 +294,9 @@ describe('isSolved', () => {
   it('should return false for a partially solved board', () => {
     const board = Immutable.fromJS(
       [
-        ['*',' ',' '],
-        ['@','$','.'],
-        [' ',' ','*'],
+        ['*', ' ', ' '],
+        ['@', '$', '.'],
+        [' ', ' ', '*'],
       ]
     );
     
@@ -304,210 +304,404 @@ describe('isSolved', () => {
   });
 });
 
-// TODO
-describe.skip('undoMove', () => {
-  it('should move player left when space is free', () => {
+describe('undoMove', () => {
+  it('should undo left move', () => {
     const playerPos = Immutable.fromJS({
-      row: 1,
-      col: 0,
+      row: 2,
+      col: 1,
     });
-    const nextTile = ' ';
-    const shouldPush = false;
 
     const previousBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@',' '],
-      [' ',' ',' '],
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
     ]);
     const latestMove = directions.left;
     const currentBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      ['@',' ',' '],
-      [' ',' ',' '],
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '@', ' ', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
     ]);
 
     expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
   });
 
-  it('should move player and box left if space is free', () => {
+  it('should undo left push', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '$', '@', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+    const latestMove = directions.left;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '$', '@', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo move up', () => {
     const playerPos = Immutable.fromJS({
       row: 1,
       col: 2,
     });
-    const nextTile = '$';
-    const shouldPush = true;
-    const board = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','$','@'],
-      [' ',' ',' '],
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
     ]);
-    const direction = directions.left;
-    const newBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      ['$','@',' '],
-      [' ',' ',' '],
+    const latestMove = directions.up;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
     ]);
 
-    expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
   });
 
-  it('should move player up when space is free', () => {
-    const playerPos = Immutable.fromJS({
-      row: 1,
-      col: 1,
-    });
-    const nextTile = ' ';
-    const shouldPush = false;
-
-    const board = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@',' '],
-      [' ',' ',' '],
-    ]);
-    const direction = directions.up;
-    const newBoard = Immutable.fromJS([
-      [' ','@',' '],
-      [' ',' ',' '],
-      [' ',' ',' '],
-    ]);
-
-    expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
-  });
-
-  it('should move player and box up when space is free', () => {
+  it('should undo push up', () => {
     const playerPos = Immutable.fromJS({
       row: 2,
-      col: 1,
+      col: 2,
     });
-    const nextTile = '$';
-    const shouldPush = true;
-    const board = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','$',' '],
-      [' ','@',' '],
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '$', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
     ]);
-    const direction = directions.up;
-    const newBoard = Immutable.fromJS([
-      [' ','$',' '],
-      [' ','@',' '],
-      [' ',' ',' '],
+    const latestMove = directions.up;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', '$', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
     ]);
 
-    expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
   });
 
-  it('should move player right when space is free', () => {
+  it('should undo move right', () => {
     const playerPos = Immutable.fromJS({
-      row: 1,
-      col: 1,
-    });
-    const nextTile = ' ';
-    const shouldPush = false;
-    const board = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@',' '],
-      [' ',' ',' '],
-    ]);
-    const direction = directions.right;
-    const newBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ',' ','@'],
-      [' ',' ',' '],
-    ]);
-
-    expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
-  });
-
-  it('should move player and box right when space is free', () => {
-    const playerPos = Immutable.fromJS({
-      row: 1,
-      col: 0,
-    });
-    const nextTile = '$';
-    const shouldPush = true;
-    const board = Immutable.fromJS([
-      [' ',' ',' '],
-      ['@','$',' '],
-      [' ',' ',' '],
-    ]);
-    const direction = directions.right;
-    const newBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@','$'],
-      [' ',' ',' '],
-    ]);
-
-    expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
-  });
-
-  it('should move player down when space is free', () => {
-    const playerPos = Immutable.fromJS({
-      row: 1,
-      col: 1,
-    });
-    const nextTile = ' ';
-    const shouldPush = false;
-    const board = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@',' '],
-      [' ',' ',' '],
-    ]);
-    const direction = directions.down;
-    const newBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ',' ',' '],
-      [' ','@',' '],
-    ]);
-
-    expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
-  });
-
-  it('should move player and box down when space is free', () => {
-    const playerPos = Immutable.fromJS({
-      row: 0,
-      col: 1,
-    });
-    const nextTile = '$';
-    const shouldPush = true;
-    const board = Immutable.fromJS([
-      [' ','@',' '],
-      [' ','$',' '],
-      [' ',' ',' '],
-    ]);
-    const direction = directions.down;
-    const newBoard = Immutable.fromJS([
-      [' ',' ',' '],
-      [' ','@',' '],
-      [' ','$',' '],
-    ]);
-
-    expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
-  });
-
-  it('should move move box and player to the right', () => {
-    const playerPos = Immutable.fromJS({
-      col: 1,
       row: 2,
+      col: 3,
     });
-    const nextTile = '$';
-    const shouldPush = true;
-    const board = Immutable.fromJS([
-      ["#", "#", "#", "#", "#", "#", " "],
-      ["#", " ", " ", " ", " ", "#", "#"],
-      ["#", "@", "$", " ", " ", " ", "#"],
-      ["#", " ", "#", "*", " ", ".", "#"],
-      ["#", " ", " ", " ", " ", " ", "#"],
-      ["#", "#", "#", "#", "#", "#", "#"],
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
     ]);
-    const direction = directions.right;
-    const newBoard = Immutable.fromJS([
-      ["#", "#", "#", "#", "#", "#", " "],
-      ["#", " ", " ", " ", " ", "#", "#"],
-      ["#", " ", "@", "$", " ", " ", "#"],
-      ["#", " ", "#", "*", " ", ".", "#"],
-      ["#", " ", " ", " ", " ", " ", "#"],
-      ["#", "#", "#", "#", "#", "#", "#"],
+    const latestMove = directions.right;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', ' ', '@', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
     ]);
-    expect(gameBoard.updateBoard(board, playerPos, nextTile, direction, shouldPush)).toEqual(newBoard);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo push right', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '@', '$', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+    const latestMove = directions.right;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '@', '$', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo move down', () => {
+    const playerPos = Immutable.fromJS({
+      row: 3,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+    const latestMove = directions.down;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo push down', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', '$', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+    const latestMove = directions.down;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', '$', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo left push', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '.', '$', '@', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+    const latestMove = directions.left;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '*', '@', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo push up', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', '.', ' ', '#'],
+      ['#', ' ', '$', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+    const latestMove = directions.up;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', '*', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo push right', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '@', '$', '.', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+    const latestMove = directions.right;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '@', '*', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo push down', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', '$', ' ', '#'],
+      ['#', ' ', '.', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+    const latestMove = directions.down;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', '*', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo left push', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '.', '*', '@', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#']
+    ]);
+    const latestMove = directions.left;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '*', '+', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo push up', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', '.', ' ', '#'],
+      ['#', ' ', '*', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+    const latestMove = directions.up;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', '*', ' ', '#'],
+      ['#', ' ', '+', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo push right', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '@', '*', '.', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+    const latestMove = directions.right;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '+', '*', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo push down', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', '*', ' ', '#'],
+      ['#', ' ', '.', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+    const latestMove = directions.down;
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '+', ' ', '#'],
+      ['#', ' ', '*', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
   });
 });
