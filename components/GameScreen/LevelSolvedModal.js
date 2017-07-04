@@ -6,6 +6,7 @@ import Modal from 'react-native-modal';
 import fontSizes from '../../constants/fontSizes';
 import fontFamilies from '../../constants/fontFamilies';
 import styleConstants from '../../constants/style';
+import colors from '../../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
   content: {
     width: '80%',
     height: '40%',
-    backgroundColor: '#AA733C',
+    backgroundColor: colors.lightBox3,
   },
   header: {
     flex: 1,
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
   button: {
     width: '80%',
     height: '80%',
-    backgroundColor: '#D9944E',
+    backgroundColor: colors.lightBox1,
   },
   center: {
     justifyContent: 'center',

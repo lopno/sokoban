@@ -22,14 +22,31 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
+    maxHeight: 65,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    marginTop: 5,
+    backgroundColor: colors.darkBox1,
+    borderTopWidth: 4,
+    borderBottomWidth: 5,
+    borderBottomColor: colors.lightBox3,
+    borderTopColor: colors.lightBox3,
   },
   headerItem: {
     flex:1,
+    height: '100%',
+    flexDirection: 'column',
+    borderRightWidth: 2,
+    borderLeftWidth: 2,
+    borderColor: colors.lightBox1,
+  },
+  headerItemContent: {
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerText: {
+    color: 'white',
+    fontSize: 10,
   },
   modal: {
     justifyContent: 'center',
@@ -113,16 +130,31 @@ class GameScreen extends React.Component {
       </View>
       <View style={styles.header}>
         <TouchableHighlight onPress={this.onBackPressed} style={styles.headerItem}>
-          <Icon name='md-arrow-back' size={40} color='white'/>
+          <View style={styles.headerItemContent}>
+            <Icon name='md-arrow-back' size={40} color='white'/>
+            <Text style={styles.headerText}>
+              BACK
+            </Text>
+          </View>
         </TouchableHighlight>
         <TouchableHighlight onPress={this.onUndoPressed} style={styles.headerItem}>
-          <Icon name='md-undo' size={40} color='white'/>
+          <View style={styles.headerItemContent}>
+            <Icon name='md-undo' size={40} color='white'/>
+            <Text style={styles.headerText}>
+              UNDO MOVE
+            </Text>
+          </View>
         </TouchableHighlight>
         <TouchableHighlight
           onPress={() => this.props.loadLevel(this.props.gameState.get('level'))}
           style={styles.headerItem}
         >
-          <Icon name='md-refresh' size={40} color='white'/>
+          <View style={styles.headerItemContent}>
+            <Icon name='md-refresh' size={40} color='white'/>
+            <Text style={styles.headerText}>
+              RESET LEVEL
+            </Text>
+          </View>
         </TouchableHighlight>
       </View>
       <View style={styles.gameBoard}>
