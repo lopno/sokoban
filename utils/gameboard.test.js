@@ -318,7 +318,10 @@ describe('undoMove', () => {
       ['#', ' ', ' ', ' ', '#'],
       ['#', '#', '#', '#', '#']
     ]);
-    const latestMove = directions.left;
+    const latestMove = {
+      direction: directions.left,
+      shouldPush: false,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
@@ -343,7 +346,10 @@ describe('undoMove', () => {
       ['#', ' ', ' ', ' ', '#'],
       ['#', '#', '#', '#', '#']
     ]);
-    const latestMove = directions.left;
+    const latestMove = {
+      direction: directions.left,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
@@ -368,7 +374,10 @@ describe('undoMove', () => {
       ['#', ' ', ' ', ' ', '#'],
       ['#', '#', '#', '#', '#']
     ]);
-    const latestMove = directions.up;
+    const latestMove = {
+      direction: directions.up,
+      shouldPush: false,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', '@', ' ', '#'],
@@ -393,7 +402,10 @@ describe('undoMove', () => {
       ['#', ' ', '@', ' ', '#'],
       ['#', '#', '#', '#', '#'],
     ]);
-    const latestMove = directions.up;
+    const latestMove = {
+      direction: directions.up,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', '$', ' ', '#'],
@@ -418,7 +430,10 @@ describe('undoMove', () => {
       ['#', ' ', ' ', ' ', '#'],
       ['#', '#', '#', '#', '#'],
     ]);
-    const latestMove = directions.right;
+    const latestMove = {
+      direction: directions.right,
+      shouldPush: false,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
@@ -443,7 +458,10 @@ describe('undoMove', () => {
       ['#', ' ', ' ', ' ', '#'],
       ['#', '#', '#', '#', '#'],
     ]);
-    const latestMove = directions.right;
+    const latestMove = {
+      direction: directions.right,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
@@ -468,7 +486,10 @@ describe('undoMove', () => {
       ['#', ' ', ' ', ' ', '#'],
       ['#', '#', '#', '#', '#']
     ]);
-    const latestMove = directions.down;
+    const latestMove = {
+      direction: directions.down,
+      shouldPush: false,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
@@ -493,7 +514,10 @@ describe('undoMove', () => {
       ['#', ' ', ' ', ' ', '#'],
       ['#', '#', '#', '#', '#']
     ]);
-    const latestMove = directions.down;
+    const latestMove = {
+      direction: directions.down,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
@@ -518,7 +542,10 @@ describe('undoMove', () => {
       ['#', ' ', ' ', ' ', '#'],
       ['#', '#', '#', '#', '#'],
     ]);
-    const latestMove = directions.left;
+    const latestMove = {
+      direction: directions.left,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
@@ -543,7 +570,10 @@ describe('undoMove', () => {
       ['#', ' ', '@', ' ', '#'],
       ['#', '#', '#', '#', '#']
     ]);
-    const latestMove = directions.up;
+    const latestMove = {
+      direction: directions.up,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', '*', ' ', '#'],
@@ -568,7 +598,10 @@ describe('undoMove', () => {
       ['#', ' ', ' ', ' ', '#'],
       ['#', '#', '#', '#', '#']
     ]);
-    const latestMove = directions.right;
+    const latestMove = {
+      direction: directions.right,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
@@ -593,7 +626,10 @@ describe('undoMove', () => {
       ['#', ' ', '.', ' ', '#'],
       ['#', '#', '#', '#', '#']
     ]);
-    const latestMove = directions.down;
+    const latestMove = {
+      direction: directions.down,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
@@ -618,7 +654,10 @@ describe('undoMove', () => {
       ['#', ' ', ' ', ' ', '#'],
       ['#', '#', '#', '#', '#']
     ]);
-    const latestMove = directions.left;
+    const latestMove = {
+      direction: directions.left,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
@@ -643,7 +682,10 @@ describe('undoMove', () => {
       ['#', ' ', '@', ' ', '#'],
       ['#', '#', '#', '#', '#'],
     ]);
-    const latestMove = directions.up;
+    const latestMove = {
+      direction: directions.up,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', '*', ' ', '#'],
@@ -668,7 +710,10 @@ describe('undoMove', () => {
       ['#', ' ', ' ', ' ', '#'],
       ['#', '#', '#', '#', '#'],
     ]);
-    const latestMove = directions.right;
+    const latestMove = {
+      direction: directions.right,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
@@ -693,12 +738,43 @@ describe('undoMove', () => {
       ['#', ' ', '.', ' ', '#'],
       ['#', '#', '#', '#', '#'],
     ]);
-    const latestMove = directions.down;
+    const latestMove = {
+      direction: directions.down,
+      shouldPush: true,
+    };
     const currentBoard = Immutable.fromJS([
       ['#', '#', '#', '#', '#'],
       ['#', ' ', ' ', ' ', '#'],
       ['#', ' ', '+', ' ', '#'],
       ['#', ' ', '*', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+
+    expect(gameBoard.undoMove(currentBoard, playerPos, latestMove)).toEqual(previousBoard);
+  });
+
+  it('should undo move down', () => {
+    const playerPos = Immutable.fromJS({
+      row: 2,
+      col: 2,
+    });
+
+    const previousBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '$', ' ', '#'],
+      ['#', '#', '#', '#', '#'],
+    ]);
+    const latestMove = {
+      direction: directions.down,
+      shouldPush: false,
+    };
+    const currentBoard = Immutable.fromJS([
+      ['#', '#', '#', '#', '#'],
+      ['#', ' ', ' ', ' ', '#'],
+      ['#', ' ', '@', ' ', '#'],
+      ['#', ' ', '$', ' ', '#'],
       ['#', '#', '#', '#', '#'],
     ]);
 

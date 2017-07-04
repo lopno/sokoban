@@ -104,9 +104,6 @@ function getPlayerPos(board) {
 }
 
 function undoMove(board, playerPos, latestMove) {
-  console.log('board', board)
-  console.log('playerPos', playerPos)
-  console.log('latestMove', latestMove)
   const boxPosition = getRelativePos(playerPos, latestMove.direction, 1);
   const boxTile = board.getIn([boxPosition.get('row'), boxPosition.get('col')]);
   const playerTile = board.getIn([playerPos.get('row'), playerPos.get('col')]);
