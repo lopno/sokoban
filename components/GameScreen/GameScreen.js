@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import BoardView from './BoardView';
 import Header from './Header';
-import Controls from './Controls';
 import LevelSolvedModal from './LevelSolvedModal';
 import directions from '../../constants/directions';
 import { movePlayer, undoMove } from '../../actions/playerActions';
@@ -24,20 +23,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   gameBoard: {
-    flex: 6,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
   },
-  controls: {
-    flex: 3,
-    width: '100%',
-    height: '100%',
-  },
-  controlsContainer: {
-    width: '100%',
-    height: '100%',
-  }
 });
 
 class GameScreen extends React.Component {
@@ -118,16 +108,6 @@ class GameScreen extends React.Component {
           onPressLeft={() => this.movePlayerDirection(directions.left)}
           onPressRight={() => this.movePlayerDirection(directions.right)}
         />
-      </View>
-      <View style={styles.controls}>
-        <View style={styles.controlsContainer}>
-          <Controls
-            onPressUp={() => this.movePlayerDirection(directions.up)}
-            onPressDown={() => this.movePlayerDirection(directions.down)}
-            onPressLeft={() => this.movePlayerDirection(directions.left)}
-            onPressRight={() => this.movePlayerDirection(directions.right)}
-          />
-        </View>
       </View>
     </View>
   }

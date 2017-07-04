@@ -1,4 +1,3 @@
-'use strict';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -6,7 +5,7 @@ import {
   Animated,
   View,
   Image,
-  TouchableHighlight,
+  TouchableWithoutFeedback,
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -36,7 +35,6 @@ const styles = StyleSheet.create({
   moveButton: {
     position: 'absolute',
     backgroundColor: 'black',
-    opacity: 0.3,
     alignItems: 'center',
   },
   upMoveButton: {
@@ -63,6 +61,10 @@ const styles = StyleSheet.create({
   }
 });
 
+/*
+ Animated.timing( this.state.xPosition, { toValue: 100, easing: Easing.back, duration: 2000, } ).start();
+ */
+
 function getTileImagePath(boardElement, direction = null) {
   switch (boardElement) {
     case boardElements.wall: return wallImage;
@@ -83,114 +85,163 @@ function getTileImagePath(boardElement, direction = null) {
 }
 
 export default class BoardView extends React.Component {
-  render() {
-    const CELL_SIZE = Math.floor(width / this.props.board.get(0).size);
+  constructor(props) {
+    super(props);
+    this.state = {
+      moveButtonOpacity: new Animated.Value(0),
+    };
+    this.onBoardPressed = this.onBoardPressed.bind(this);
+  }
 
-    return <View
-      style={{
+  onBoardPressed() {
+    Animated.sequence([
+      Animated.timing(
+        this.state.moveButtonOpacity,
+        {
+          toValue: 0.2,
+          duration: 400,
+        }
+      ),
+      Animated.timing(
+        this.state.moveButtonOpacity,
+        {
+          toValue: 0,
+          duration: 600,
+        }
+      )
+    ]).start();
+  }
+
+  render() {
+    const CELL_SIZE = Math.floor(width / this.props.board.get(0).size); // shouldn't be calculated every render
+    return <TouchableWithoutFeedback
+      onPress={this.onBoardPressed}
+    >
+      <View
+        style={{
           width,
           height: CELL_SIZE * this.props.board.size, // needs to be 100% bc of the controller. we can have some other shit that is smaller
         }}
-    >
-      {this.props.board.map((row, rowIndex) =>
-        row.map((tile, colIndex) => {
-          const key = `${rowIndex}${colIndex}`;
-          const position = { // replace this absolute stuff with flex-box
-            left: colIndex * CELL_SIZE,
-            top: rowIndex * CELL_SIZE,
-            width: CELL_SIZE,
-            height: CELL_SIZE,
-          };
+      >
+        {this.props.board.map((row, rowIndex) =>
+          row.map((tile, colIndex) => {
+            const key = `${rowIndex}${colIndex}`;
+            const position = { // replace this absolute stuff with flex-box
+              left: colIndex * CELL_SIZE,
+              top: rowIndex * CELL_SIZE,
+              width: CELL_SIZE,
+              height: CELL_SIZE,
+            };
 
-          return <View>
-            {tile !== boardElements.floor && tile !== boardElements.wall
-              ? <Image
-                key={`${key}floor`}
+            return <View>
+              {tile !== boardElements.floor && tile !== boardElements.wall
+                ? <Image
+                  key={`${key}floor`}
+                  style={[
+                    styles.tile,
+                    position
+                  ]}
+                  source={getTileImagePath(floorImage)}
+                />
+                : null}
+              <Image
+                key={key}
                 style={[
                   styles.tile,
                   position
                 ]}
-                source={getTileImagePath(floorImage)}
+                source={getTileImagePath(tile, this.props.playerDirection)}
               />
-              : null}
-            <Image
-              key={key}
-              style={[
-                styles.tile,
-                position
-              ]}
-              source={getTileImagePath(tile, this.props.playerDirection)}
-            />
-          </View>;
-        })
-      )}
-      <TouchableHighlight
-        style={[
-          styles.moveButton,
-          styles.rightMoveButton,
-          {
-            left: this.props.playerPos.get('col') * CELL_SIZE + CELL_SIZE,
-            top: this.props.playerPos.get('row') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
-            width: (this.props.board.get(0).size - this.props.playerPos.get('col')) * CELL_SIZE,
-          }
-        ]}
-        onPress={this.props.onPressRight}
-      >
-        <Icon
-          name="ios-arrow-dropright"
-          color='white'
-          size={60}/>
-      </TouchableHighlight>
-      <TouchableHighlight
-        style={[
-          styles.moveButton,
-          styles.leftMoveButton,
-          {
-            top: this.props.playerPos.get('row') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
-            width: CELL_SIZE * this.props.playerPos.get('col'),
-          }]
-        }
-        onPress={this.props.onPressLeft}
-      >
-        <Icon
-          name="ios-arrow-dropleft"
-          color='white'
-          size={60}/>
-      </TouchableHighlight>
-      <TouchableHighlight
-        style={[
-          styles.moveButton,
-          styles.downMoveButton,
-          {
-            left: this.props.playerPos.get('col') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
-            top: this.props.playerPos.get('row') * CELL_SIZE + CELL_SIZE,
-            height: (this.props.board.size - this.props.playerPos.get('row')) * CELL_SIZE - CELL_SIZE,
-          }
-        ]}
-        onPress={this.props.onPressDown}
-      >
-        <Icon
-          name="ios-arrow-dropdown"
-          color='white'
-          size={60}/>
-      </TouchableHighlight>
-      <TouchableHighlight
-        style={[
-          styles.moveButton,
-          styles.upMoveButton,
-          {
-            left: this.props.playerPos.get('col') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
-            height: (this.props.playerPos.get('row')) * CELL_SIZE,
-          }
-        ]}
-        onPress={this.props.onPressUp}
-      >
-        <Icon
-          name="ios-arrow-dropup"
-          color='white'
-          size={60}/>
-      </TouchableHighlight>
-    </View>;
+            </View>;
+          })
+        )}
+        <TouchableWithoutFeedback
+          onPress={this.props.onPressRight}
+        >
+          <Animated.View
+            style={[
+              styles.moveButton,
+              styles.rightMoveButton,
+              {
+                opacity: this.state.moveButtonOpacity,
+                left: this.props.playerPos.get('col') * CELL_SIZE + CELL_SIZE,
+                top: this.props.playerPos.get('row') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
+                width: (this.props.board.get(0).size - this.props.playerPos.get('col')) * CELL_SIZE,
+              }
+            ]}
+          >
+            <Icon
+              name="ios-arrow-dropright"
+              color='white'
+              size={60}/>
+          </Animated.View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={this.props.onPressLeft}
+        >
+          <Animated.View
+            style={[
+              styles.moveButton,
+              styles.leftMoveButton,
+              {
+                opacity: this.state.moveButtonOpacity,
+                top: this.props.playerPos.get('row') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
+                width: CELL_SIZE * this.props.playerPos.get('col'),
+              }]
+            }
+          >
+          <Icon
+            name="ios-arrow-dropleft"
+            color='white'
+            size={60}/>
+          </Animated.View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={this.props.onPressDown}
+        >
+          <Animated.View
+            style={[
+              styles.moveButton,
+              styles.downMoveButton,
+              {
+                opacity: this.state.moveButtonOpacity,
+                left: this.props.playerPos.get('col') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
+                top: this.props.playerPos.get('row') * CELL_SIZE + CELL_SIZE,
+                height: (this.props.board.size - this.props.playerPos.get('row')) * CELL_SIZE - CELL_SIZE,
+              }
+            ]}
+          >
+            <Icon
+              name="ios-arrow-dropdown"
+              color='white'
+              size={60}/>
+          </Animated.View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={this.props.onPressUp}
+        >
+          <Animated.View
+            style={[
+              styles.moveButton,
+              styles.upMoveButton,
+              {
+                opacity: this.state.moveButtonOpacity,
+                left: this.props.playerPos.get('col') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
+                height: (this.props.playerPos.get('row')) * CELL_SIZE,
+              }
+            ]}
+          >
+            <Icon
+              style={{
+                opacity: this.state.moveButtonOpacity * 3,
+              }}
+              name="ios-arrow-dropup"
+              color='white'
+              size={60}/>
+          </Animated.View>
+        </TouchableWithoutFeedback>
+      </View>
+    </TouchableWithoutFeedback>;
   }
 }
 
