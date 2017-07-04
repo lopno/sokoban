@@ -4,6 +4,7 @@ import { TouchableHighlight, Image, View, Text, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import fontFamilies from '../../constants/fontFamilies';
 import fontSizes from '../../constants/fontSizes';
+import colors from '../../constants/colors';
 
 const styles = StyleSheet.create({
   overlay: {
@@ -36,13 +37,13 @@ const LevelButton = ({onPress, level, isSolved}) =>
   (<TouchableHighlight onPress={onPress}>
     <View>
       {isSolved
-      ? <Image source={require('../../assets/img/boxOnGoal.png')}/>
-      : <Image source={require('../../assets/img/box.png')}/>}
+      ? <Image source={require('../../assets/img/box.png')}/>
+      : <Image source={require('../../assets/img/boxOnGoal.png')}/>}
       <View style={styles.overlay}>
         <View style={[styles.topOverlay, styles.center]}>
           {isSolved
             ? <Icon name='md-star' color="gold" size={35}/>
-            : <Icon name='md-star-outline' color="gold" size={35}/>}
+            : <Icon name='md-star-outline' color={colors.darkGray} size={35}/>}
         </View>
         <View style={[styles.bottomOverlay, styles.center]}>
           <Text style={styles.text}>
