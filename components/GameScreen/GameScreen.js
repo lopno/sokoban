@@ -1,15 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import BoardView from './BoardView';
+import Header from './Header';
 import Controls from './Controls';
 import LevelSolvedModal from './LevelSolvedModal';
 import directions from '../../constants/directions';
 import { movePlayer, undoMove } from '../../actions/playerActions';
 import { loadLevel } from '../../actions/levelActions';
 import colors from '../../constants/colors';
-
 
 const styles = StyleSheet.create({
   container: {
@@ -20,38 +19,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  header: {
-    flex: 1,
-    maxHeight: 65,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    backgroundColor: colors.darkBox1,
-    borderTopWidth: 4,
-    borderBottomWidth: 5,
-    borderBottomColor: colors.lightBox3,
-    borderTopColor: colors.lightBox3,
-  },
-  headerItem: {
-    flex:1,
-    height: '100%',
-    flexDirection: 'column',
-    borderRightWidth: 2,
-    borderLeftWidth: 2,
-    borderColor: colors.lightBox1,
-  },
-  headerItemContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  headerText: {
-    color: 'white',
-    fontSize: 10,
-  },
   modal: {
     justifyContent: 'center',
     alignItems: 'center',
-    // alignContent: 'center',
   },
   gameBoard: {
     flex: 6,
@@ -82,6 +52,7 @@ class GameScreen extends React.Component {
     this.movePlayerDirection = this.movePlayerDirection.bind(this);
     this.onBackPressed = this.onBackPressed.bind(this);
     this.onUndoPressed = this.onUndoPressed.bind(this);
+    this.onResetPressed = this.onResetPressed.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -119,6 +90,10 @@ class GameScreen extends React.Component {
     this.props.undoMove();
   }
 
+  onResetPressed() {
+    this.props.loadLevel(this.props.gameState.get('level'));
+  }
+
   render() {
     return <View style={styles.container}>
       <View style={styles.modal}>
@@ -128,35 +103,11 @@ class GameScreen extends React.Component {
           onRequestClose={this.closeModal}
         />
       </View>
-      <View style={styles.header}>
-        <TouchableHighlight onPress={this.onBackPressed} style={styles.headerItem}>
-          <View style={styles.headerItemContent}>
-            <Icon name='md-arrow-back' size={40} color='white'/>
-            <Text style={styles.headerText}>
-              BACK
-            </Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={this.onUndoPressed} style={styles.headerItem}>
-          <View style={styles.headerItemContent}>
-            <Icon name='md-undo' size={40} color='white'/>
-            <Text style={styles.headerText}>
-              UNDO MOVE
-            </Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() => this.props.loadLevel(this.props.gameState.get('level'))}
-          style={styles.headerItem}
-        >
-          <View style={styles.headerItemContent}>
-            <Icon name='md-refresh' size={40} color='white'/>
-            <Text style={styles.headerText}>
-              RESET LEVEL
-            </Text>
-          </View>
-        </TouchableHighlight>
-      </View>
+      <Header
+        onBackPressed={this.onBackPressed}
+        onUndoPressed={this.onUndoPressed}
+        onResetPressed={this.onResetPressed}
+      />
       <View style={styles.gameBoard}>
         <BoardView
           board={this.props.gameState.get('board')}
