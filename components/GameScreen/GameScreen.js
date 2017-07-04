@@ -45,7 +45,7 @@ class GameScreen extends React.Component {
     super(props);
     this.state = {
       showModal: false,
-      playerDirection: directions.down,
+      playerDirection: directions.down, // TODO: use latest from route
     };
     this.closeModal = this.closeModal.bind(this);
     this.loadNextLevel = this.loadNextLevel.bind(this);
@@ -111,7 +111,12 @@ class GameScreen extends React.Component {
       <View style={styles.gameBoard}>
         <BoardView
           board={this.props.gameState.get('board')}
+          playerPos={this.props.gameState.get('playerPos')}
           playerDirection={this.state.playerDirection}
+          onPressUp={() => this.movePlayerDirection(directions.up)}
+          onPressDown={() => this.movePlayerDirection(directions.down)}
+          onPressLeft={() => this.movePlayerDirection(directions.left)}
+          onPressRight={() => this.movePlayerDirection(directions.right)}
         />
       </View>
       <View style={styles.controls}>
