@@ -1,7 +1,15 @@
 'use strict';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View, Image, TouchableHighlight, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  Animated,
+  View,
+  Image,
+  TouchableHighlight,
+  Dimensions,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const boxImage = require('../../assets/img/box.png');
 const boxOnGoalImage = require('../../assets/img/boxOnGoal.png');
@@ -25,6 +33,34 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  moveButton: {
+    position: 'absolute',
+    backgroundColor: 'black',
+    opacity: 0.3,
+    alignItems: 'center',
+  },
+  upMoveButton: {
+    top: 0,
+    width: controllerSize,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  downMoveButton: {
+    width: controllerSize,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+  leftMoveButton: {
+    left: 0,
+    height: controllerSize,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  rightMoveButton: {
+    height: controllerSize,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  }
 });
 
 function getTileImagePath(boardElement, direction = null) {
@@ -53,13 +89,13 @@ export default class BoardView extends React.Component {
     return <View
       style={{
           width,
-          height: CELL_SIZE * this.props.board.size,
+          height: CELL_SIZE * this.props.board.size, // needs to be 100% bc of the controller. we can have some other shit that is smaller
         }}
     >
       {this.props.board.map((row, rowIndex) =>
         row.map((tile, colIndex) => {
           const key = `${rowIndex}${colIndex}`;
-          const position = {
+          const position = { // replace this absolute stuff with flex-box
             left: colIndex * CELL_SIZE,
             top: rowIndex * CELL_SIZE,
             width: CELL_SIZE,
@@ -89,76 +125,70 @@ export default class BoardView extends React.Component {
         })
       )}
       <TouchableHighlight
-        style={{
-          position: 'absolute',
-          left: this.props.playerPos.get('col') * CELL_SIZE + CELL_SIZE,
-          top: this.props.playerPos.get('row') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
-          backgroundColor: 'black',
-          opacity: 0.8,
-          height: 80,
-          width: (this.props.board.get(0).size - this.props.playerPos.get('col')) * CELL_SIZE
-        }}
+        style={[
+          styles.moveButton,
+          styles.rightMoveButton,
+          {
+            left: this.props.playerPos.get('col') * CELL_SIZE + CELL_SIZE,
+            top: this.props.playerPos.get('row') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
+            width: (this.props.board.get(0).size - this.props.playerPos.get('col')) * CELL_SIZE,
+          }
+        ]}
         onPress={this.props.onPressRight}
       >
-        <View>
-          <Text>
-            {`Right ${this.props.playerPos.get('row')}, ${this.props.playerPos.get('col')}`}
-          </Text>
-        </View>
+        <Icon
+          name="ios-arrow-dropright"
+          color='white'
+          size={60}/>
       </TouchableHighlight>
       <TouchableHighlight
-        style={{
-          position: 'absolute',
-          left: 0,
-          top: this.props.playerPos.get('row') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
-          width: CELL_SIZE * this.props.playerPos.get('col'),
-          backgroundColor: 'black',
-          opacity: 0.8,
-          height: controllerSize,
-        }}
+        style={[
+          styles.moveButton,
+          styles.leftMoveButton,
+          {
+            top: this.props.playerPos.get('row') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
+            width: CELL_SIZE * this.props.playerPos.get('col'),
+          }]
+        }
         onPress={this.props.onPressLeft}
       >
-        <View>
-          <Text>
-            {`Left ${this.props.playerPos.get('row')}, ${this.props.playerPos.get('col')}`}
-          </Text>
-        </View>
+        <Icon
+          name="ios-arrow-dropleft"
+          color='white'
+          size={60}/>
       </TouchableHighlight>
       <TouchableHighlight
-        style={{
-          position: 'absolute',
-          left: this.props.playerPos.get('col') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
-          top: this.props.playerPos.get('row') * CELL_SIZE + CELL_SIZE,
-          width: controllerSize,
-          backgroundColor: 'black',
-          opacity: 0.8,
-          height: (this.props.board.size - this.props.playerPos.get('row')) * CELL_SIZE - CELL_SIZE,
-        }}
+        style={[
+          styles.moveButton,
+          styles.downMoveButton,
+          {
+            left: this.props.playerPos.get('col') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
+            top: this.props.playerPos.get('row') * CELL_SIZE + CELL_SIZE,
+            height: (this.props.board.size - this.props.playerPos.get('row')) * CELL_SIZE - CELL_SIZE,
+          }
+        ]}
         onPress={this.props.onPressDown}
       >
-        <View>
-          <Text>
-            {`Down ${this.props.playerPos.get('row')}, ${this.props.playerPos.get('col')}`}
-          </Text>
-        </View>
+        <Icon
+          name="ios-arrow-dropdown"
+          color='white'
+          size={60}/>
       </TouchableHighlight>
       <TouchableHighlight
-        style={{
-          position: 'absolute',
-          left: this.props.playerPos.get('col') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
-          top: 0,
-          width: controllerSize,
-          backgroundColor: 'black',
-          opacity: 0.8,
-          height: (this.props.playerPos.get('row')) * CELL_SIZE,
-        }}
+        style={[
+          styles.moveButton,
+          styles.upMoveButton,
+          {
+            left: this.props.playerPos.get('col') * CELL_SIZE - ((controllerSize - CELL_SIZE) / 2),
+            height: (this.props.playerPos.get('row')) * CELL_SIZE,
+          }
+        ]}
         onPress={this.props.onPressUp}
       >
-        <View>
-          <Text>
-            {`Up ${this.props.playerPos.get('row')}, ${this.props.playerPos.get('col')}`}
-          </Text>
-        </View>
+        <Icon
+          name="ios-arrow-dropup"
+          color='white'
+          size={60}/>
       </TouchableHighlight>
     </View>;
   }
