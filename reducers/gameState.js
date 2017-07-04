@@ -43,7 +43,11 @@ const gameState = (state = initialState, action) => {
             const tempState = state
               .set('board', updatedBoard)
               .set('playerPos', updatePlayerPos(state.get('playerPos'), action.direction))
-              .set('route', state.get('route').push(action.direction))
+              .set(
+                'route',
+                state.get('route').push(
+                  { direction: action.direction, shouldPush: validMove.shouldPush }
+                  ))
               .set('solved', levelSolved);
             return levelSolved
               ? tempState.setIn(['levelsSolved', state.get('level')], true)
@@ -58,7 +62,7 @@ const gameState = (state = initialState, action) => {
         ? state.withMutations(state =>
           state
             .set('board', undoMove(state.get('board'), state.get('playerPos'), latestMove))
-            .set('playerPos', updatePlayerPos(state.get('playerPos'), latestMove, -1))
+            .set('playerPos', updatePlayerPos(state.get('playerPos'), latestMove.direction, -1))
             .set('route', state.get('route').pop())
         )
         : state;

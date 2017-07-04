@@ -67,7 +67,6 @@ function isMoveValid(board, playerPos, direction) {
   return false;
 }
 
-// TODO: refactor to distance instead
 function updatePlayerPos(playerPos, direction, distance = 1) {
   switch (direction) {
     case directions.up: return playerPos.set('row', playerPos.get('row') - distance);
@@ -104,11 +103,14 @@ function getPlayerPos(board) {
   });
 }
 
-function undoMove(board, playerPos, direction) {
-  const boxPosition = getRelativePos(playerPos, direction, 1);
+function undoMove(board, playerPos, latestMove) {
+  console.log('board', board)
+  console.log('playerPos', playerPos)
+  console.log('latestMove', latestMove)
+  const boxPosition = getRelativePos(playerPos, latestMove.direction, 1);
   const boxTile = board.getIn([boxPosition.get('row'), boxPosition.get('col')]);
   const playerTile = board.getIn([playerPos.get('row'), playerPos.get('col')]);
-  const previousPosition = getRelativePos(playerPos, direction, -1);
+  const previousPosition = getRelativePos(playerPos, latestMove.direction, -1);
   const previousTile = board.getIn([previousPosition.get('row'), previousPosition.get('col')]);
   let newBoxTile;
   switch (boxTile) {
@@ -116,10 +118,13 @@ function undoMove(board, playerPos, direction) {
       newBoxTile = boardElements.wall;
       break;
     case boardElements.box:
+      newBoxTile = latestMove.shouldPush ? boardElements.floor : boardElements.box;
+      break;
     case boardElements.floor:
       newBoxTile = boardElements.floor;
       break;
     case boardElements.boxOnGoal:
+      newBoxTile = latestMove.shouldPush ? boardElements.goal : boardElements.boxOnGoal;
     case boardElements.goal:
       newBoxTile = boardElements.goal;
       break;
@@ -129,13 +134,15 @@ function undoMove(board, playerPos, direction) {
 
   let newPlayerTile;
   if (playerTile === boardElements.playerOnGoal) {
-    if (boxTile === boardElements.box || boxTile === boardElements.boxOnGoal) {
+    if (latestMove.shouldPush
+      && (boxTile === boardElements.box || boxTile === boardElements.boxOnGoal)) {
       newPlayerTile = boardElements.boxOnGoal;
     } else {
       newPlayerTile = boardElements.goal;
     }
   } else {
-    if (boxTile === boardElements.box || boxTile === boardElements.boxOnGoal) {
+    if (latestMove.shouldPush
+      && (boxTile === boardElements.box || boxTile === boardElements.boxOnGoal)) {
       newPlayerTile = boardElements.box;
     } else {
       newPlayerTile = boardElements.floor;
