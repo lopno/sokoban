@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { BackHandler, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import BoardView from './BoardView';
 import Header from './Header';
@@ -45,6 +45,13 @@ class GameScreen extends React.Component {
     this.onResetPressed = this.onResetPressed.bind(this);
   }
 
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      this.props.navigation.goBack();
+      return true;
+    });
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.gameState.get('solved') === false
       && nextProps.gameState.get('solved') === true) {
@@ -73,7 +80,7 @@ class GameScreen extends React.Component {
   }
 
   onBackPressed() {
-    this.props.navigation.goBack();
+    this.props.navigation.goBack(null);
   }
 
   onUndoPressed() {

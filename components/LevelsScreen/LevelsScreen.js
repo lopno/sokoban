@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Button } from 'react-native';
-import { NavigationActions } from 'react-navigation';
+import { BackHandler, View, Button } from 'react-native';
 
 import LevelButton from './LevelButton';
 
@@ -35,6 +34,13 @@ class LevelsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.onLevelPressed = this.onLevelPressed.bind(this);
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      this.props.navigation.goBack(null);
+      return true;
+    });
   }
 
   onLevelPressed(level) {

@@ -57,7 +57,10 @@ const LevelButton = ({onPress, level, isSolved}) =>
 LevelButton.propTypes = {
   onPress: PropTypes.func,
   level: PropTypes.string,
-  isSolved: PropTypes.bool,
+  isSolved: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.any,
+  ]),
 };
 
 LevelButton.defaultProps = {

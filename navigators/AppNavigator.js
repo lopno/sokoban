@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addNavigationHelpers, StackNavigator, TabNavigator } from 'react-navigation';
+import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 
+import MainScreen from '../components/MainScreen/MainScreen';
 import GameScreen from '../components/GameScreen/GameScreen';
 import LevelsScreen from '../components/LevelsScreen/LevelsScreen';
 
 export const AppNavigator = StackNavigator(
   {
+    MainScreen: { screen: MainScreen },
     LevelsScreen: { screen: LevelsScreen },
     GameScreen: { screen: GameScreen },
   });

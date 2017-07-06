@@ -1,7 +1,7 @@
 import { AppNavigator } from '../navigators/AppNavigator';
 import { NavigationActions } from 'react-navigation';
-// Start with two routes: The Main screen, with the Login screen on top.
-const firstAction = AppNavigator.router.getActionForPathAndParams('LevelsScreen');
+
+const firstAction = AppNavigator.router.getActionForPathAndParams('MainScreen');
 const tempNavState = AppNavigator.router.getStateForAction(firstAction);
 const initialNavState = AppNavigator.router.getStateForAction(
   tempNavState
@@ -10,26 +10,16 @@ const initialNavState = AppNavigator.router.getStateForAction(
 function nav(state = initialNavState, action) {
   let nextState;
   switch (action.type) {
-    /*
-     case 'Login':
-     nextState = AppNavigator.router.getStateForAction(
-     NavigationActions.back(),
-     state
-     );
-     break;
-     case 'Logout':
-     nextState = AppNavigator.router.getStateForAction(
-     NavigationActions.navigate({ routeName: 'Login' }),
-     state
-     );
-     break;
-     */
+    case NavigationActions.BACK:
+      nextState = {
+        index: state.index > 0 ? state.index - 1 : 0,
+        routes: state.routes.length > 1 ? state.routes.slice(0, -1) : state.routes,
+      };
+      break;
     default:
       nextState = AppNavigator.router.getStateForAction(action, state);
       break;
   }
-
-  // Simply return the original `state` if `nextState` is null or undefined.
   return nextState || state;
 }
 
