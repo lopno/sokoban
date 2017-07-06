@@ -2,7 +2,7 @@ import React from 'react';
 import { AsyncStorage } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, compose } from 'redux';
-import {persistStore, autoRehydrate} from 'redux-persist'
+import { persistStore, autoRehydrate } from 'redux-persist'
 
 import AppReducer from './reducers';
 import AppWithNavigationState from './navigators/AppNavigator';
