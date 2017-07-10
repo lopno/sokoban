@@ -61,10 +61,6 @@ const styles = StyleSheet.create({
   }
 });
 
-/*
- Animated.timing( this.state.xPosition, { toValue: 100, easing: Easing.back, duration: 2000, } ).start();
- */
-
 function getTileImagePath(boardElement, direction = null) {
   switch (boardElement) {
     case boardElements.wall: return wallImage;
