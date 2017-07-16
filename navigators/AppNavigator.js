@@ -6,10 +6,12 @@ import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 import MainScreen from '../components/MainScreen/MainScreen';
 import GameScreen from '../components/GameScreen/GameScreen';
 import LevelsScreen from '../components/LevelsScreen/LevelsScreen';
+import WorldsScreen from '../components/WorldsScreen/WorldsScreen';
 
 export const AppNavigator = StackNavigator(
   {
     MainScreen: { screen: MainScreen },
+    WorldsScreen: { screen: WorldsScreen },
     LevelsScreen: { screen: LevelsScreen },
     GameScreen: { screen: GameScreen },
   });

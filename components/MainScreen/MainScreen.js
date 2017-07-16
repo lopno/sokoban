@@ -67,7 +67,7 @@ class MainScreen extends React.Component {
   }
 
   onPlayPressed() {
-    this.props.navigation.navigate('LevelsScreen')
+    this.props.navigation.navigate('WorldsScreen')
   }
 
   moveImage() {
