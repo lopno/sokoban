@@ -122,6 +122,7 @@ function undoMove(board, playerPos, latestMove) {
       break;
     case boardElements.boxOnGoal:
       newBoxTile = latestMove.shouldPush ? boardElements.goal : boardElements.boxOnGoal;
+      break;
     case boardElements.goal:
       newBoxTile = boardElements.goal;
       break;
