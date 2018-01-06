@@ -4,14 +4,19 @@ import fontSizes from '../../constants/fontSizes';
 import colors from '../../constants/colors';
 
 const styles = StyleSheet.create({
-  background: {
+  container: {
     display: 'flex',
-    flex: 1,
-    width: null,
-    height: null,
+    flexDirection: 'column',
+    width: '100%',
+    height: '100%',
+  },
+  background: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
     resizeMode: 'cover',
-    alignItems: 'center',
-    justifyContent: 'space-around'
   },
   headLineContainer: {
     flex: 2,
@@ -93,10 +98,13 @@ class MainScreen extends React.Component {
       outputRange: ['-90deg', '90deg']
     });
 
-    return <Image
+    return <View style={styles.container}>
+      <Image
       source={require('../../assets/img/background_boxes.png')}
       style={styles.background}
     >
+
+      </Image>
       <View
         style={[styles.headLineContainer, styles.center]}
       >
@@ -137,7 +145,8 @@ class MainScreen extends React.Component {
           </Text>
         </TouchableHighlight>
       </View>
-    </Image>;
+
+    </View>;
   }
 }
 
