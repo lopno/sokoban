@@ -129,7 +129,7 @@ export default class BoardView extends React.Component {
               height: CELL_SIZE,
             };
 
-            return <View>
+            return <View key={`${rowIndex}x${colIndex}`}>
               {tile !== boardElements.floor && tile !== boardElements.wall
                 ? <Image
                   key={`${key}floor`}
